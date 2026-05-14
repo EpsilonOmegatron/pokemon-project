@@ -21,8 +21,8 @@ public class MoveController {
         return ResponseEntity.ok(moveService.getAllMoves());
     }
 
-    @GetMapping
-    public ResponseEntity<MoveResponse> getMoveByName(String name) {
+    @GetMapping("/{name}")
+    public ResponseEntity<MoveResponse> getMoveByName(@PathVariable String name) {
         return ResponseEntity.ok(moveService.getMoveByName(name));
     }
 
