@@ -1,10 +1,18 @@
 package com.example.pokemonproject.exception;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-public record ErrorResponse(String code, String message, LocalDateTime timestamp) {
+import java.time.LocalDateTime;
+import java.util.Map;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record ErrorResponse(String code, String message, LocalDateTime timestamp, Map<String, String> errors) {
 
     public ErrorResponse(String code, String message) {
-        this(code, message, LocalDateTime.now());
+        this(code, message, LocalDateTime.now(), null);
+    }
+
+    public ErrorResponse(String code, String message, Map<String, String> errors) {
+        this(code, message, LocalDateTime.now(), errors);
     }
 }
