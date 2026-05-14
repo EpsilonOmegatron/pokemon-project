@@ -18,12 +18,12 @@ public class PokemonService {
 
     public List<PokemonResponse> getAllPokemon() {
         List<Pokemon> pokemon = pokemonRepository.findAll();
-        return pokemon.stream().map(PokemonMapper::toPokemonResponse).toList();
+        return pokemon.stream().map(PokemonMapper::mapToPokemonResponse).toList();
     }
 
     public PokemonResponse getPokemonByName(String name) {
         Pokemon pokemon = pokemonRepository.findPokemonByName(name)
-                .orElseThrow(() -> new ResourceNotFoundException("Pokemon with name: " + name + " doesn't exist."));
-        return PokemonMapper.toPokemonResponse(pokemon);
+                .orElseThrow(() -> new ResourceNotFoundException("Pokemon with name " + name + " doesn't exist."));
+        return PokemonMapper.mapToPokemonResponse(pokemon);
     }
 }

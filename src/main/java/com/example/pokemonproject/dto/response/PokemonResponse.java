@@ -1,7 +1,6 @@
 package com.example.pokemonproject.dto.response;
 
 import com.example.pokemonproject.enums.Type;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.Set;
 

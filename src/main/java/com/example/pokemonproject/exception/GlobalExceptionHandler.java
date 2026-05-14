@@ -13,4 +13,10 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse("RESOURCE_NOT_FOUND", e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateResourceException(DuplicateResourceException e) {
+        ErrorResponse error = new ErrorResponse("DUPLICATE_RESOURCE", e.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
 }

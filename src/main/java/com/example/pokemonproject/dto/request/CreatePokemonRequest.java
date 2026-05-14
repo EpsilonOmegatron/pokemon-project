@@ -1,4 +1,4 @@
 package com.example.pokemonproject.dto.request;
 
-public record RegisterPokemonRequest() {
+public record CreatePokemonRequest() {
 }

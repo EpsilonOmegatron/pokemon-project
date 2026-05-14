@@ -8,7 +8,8 @@ import com.example.pokemonproject.entity.Pokemon;
 import java.util.stream.Collectors;
 
 public class PokemonMapper {
-    public static PokemonResponse toPokemonResponse(Pokemon pokemon) {
+
+    public static PokemonResponse mapToPokemonResponse(Pokemon pokemon) {
         return new PokemonResponse(
                 pokemon.getId(),
                 pokemon.getName(),

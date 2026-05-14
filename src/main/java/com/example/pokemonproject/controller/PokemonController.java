@@ -1,6 +1,5 @@
 package com.example.pokemonproject.controller;
 
-import com.example.pokemonproject.dto.request.RegisterPokemonRequest;
 import com.example.pokemonproject.dto.response.PokemonResponse;
 import com.example.pokemonproject.service.PokemonService;
 import lombok.AllArgsConstructor;
