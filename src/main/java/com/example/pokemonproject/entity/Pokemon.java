@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -32,7 +33,7 @@ public class Pokemon {
             joinColumns = @JoinColumn(name = "pokemon_id"),
             inverseJoinColumns = @JoinColumn(name = "ability_id")
     )
-    private Set<Ability> abilities;
+    private Set<Ability> abilities = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -40,7 +41,7 @@ public class Pokemon {
             joinColumns = @JoinColumn(name = "pokemon_id"),
             inverseJoinColumns = @JoinColumn(name = "move_id")
     )
-    private Set<Move> moves;
+    private Set<Move> moves = new HashSet<>();
 
     @Column(nullable = false)
     private Integer hp;

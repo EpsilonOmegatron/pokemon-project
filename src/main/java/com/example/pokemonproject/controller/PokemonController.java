@@ -1,5 +1,6 @@
 package com.example.pokemonproject.controller;
 
+import com.example.pokemonproject.dto.request.CreatePokemonRequest;
 import com.example.pokemonproject.dto.response.PokemonResponse;
 import com.example.pokemonproject.service.PokemonService;
 import lombok.AllArgsConstructor;
@@ -26,8 +27,8 @@ public class PokemonController {
         return ResponseEntity.ok(pokemonService.getPokemonByName(name));
     }
 
-//    @PostMapping
-//    public ResponseEntity<PokemonResponse> registerNewPokemon(@RequestBody RegisterPokemonRequest pokemon) {
-//        return ResponseEntity.ok(pokemonService.getPokemonByName(pokemon));
-//    }
+    @PostMapping
+    public ResponseEntity<PokemonResponse> registerNewPokemon(@RequestBody CreatePokemonRequest request) {
+        return ResponseEntity.ok(pokemonService.createPokemon(request));
+    }
 }

@@ -27,7 +27,7 @@ public class AbilityController {
     }
 
     @PostMapping
-    public ResponseEntity<AbilityResponse> createAbility(@RequestBody CreateAbilityRequest abilityRequest) {
-        return ResponseEntity.ok(abilityService.saveAbility(abilityRequest));
+    public ResponseEntity<AbilityResponse> createAbility(@RequestBody CreateAbilityRequest request) {
+        return ResponseEntity.ok(abilityService.saveAbility(request));
     }
 }

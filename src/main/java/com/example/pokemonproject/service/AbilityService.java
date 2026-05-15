@@ -29,14 +29,15 @@ public class AbilityService {
         return AbilityMapper.mapToAbilityResponse(ability);
     }
 
-    public AbilityResponse saveAbility(CreateAbilityRequest abilityRequest) {
-        Ability ability = AbilityMapper.mapToAbility(abilityRequest);
+    public AbilityResponse saveAbility(CreateAbilityRequest request) {
+        Ability ability = AbilityMapper.mapToAbility(request);
 
         if (abilityRepository.findByNameIgnoreCase(ability.getName()).isPresent()) {
             throw new DuplicateResourceException("Ability with name " + ability.getName() + " already exists");
         }
 
-        abilityRepository.save(ability);
-        return AbilityMapper.mapToAbilityResponse(ability);
+        Ability saved = abilityRepository.save(ability);
+
+        return AbilityMapper.mapToAbilityResponse(saved);
     }
 }

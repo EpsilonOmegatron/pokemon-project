@@ -5,6 +5,7 @@ import com.example.pokemonproject.dto.response.MoveResponse;
 import com.example.pokemonproject.entity.Move;
 
 public class MoveMapper {
+
     public static MoveResponse mapToMoveResponse(Move move) {
         return new MoveResponse(
                 move.getId(),
@@ -18,15 +19,15 @@ public class MoveMapper {
         );
     }
 
-    public static Move mapToMove(CreateMoveRequest createMoveRequest) {
+    public static Move mapToMove(CreateMoveRequest request) {
         Move move = new Move();
-        move.setName(createMoveRequest.name());
-        move.setDescription(createMoveRequest.description());
-        move.setDamageCategory(createMoveRequest.damageCategory());
-        move.setType(createMoveRequest.type());
-        move.setBasePower(createMoveRequest.basePower());
-        move.setPowerPoints(createMoveRequest.powerPoints());
-        move.setAccuracy(createMoveRequest.accuracy());
+        move.setName(request.name());
+        move.setDescription(request.description());
+        move.setDamageCategory(request.damageCategory());
+        move.setType(request.type());
+        move.setBasePower(request.basePower());
+        move.setPowerPoints(request.powerPoints());
+        move.setAccuracy(request.accuracy());
         return move;
     }
 }

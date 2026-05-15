@@ -27,7 +27,7 @@ public class MoveController {
     }
 
     @PostMapping
-    public ResponseEntity<MoveResponse> createMove(@RequestBody CreateMoveRequest createMoveRequest) {
-        return ResponseEntity.ok(moveService.saveMove(createMoveRequest));
+    public ResponseEntity<MoveResponse> createMove(@RequestBody CreateMoveRequest request) {
+        return ResponseEntity.ok(moveService.saveMove(request));
     }
 }

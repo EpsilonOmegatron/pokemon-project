@@ -29,14 +29,15 @@ public class MoveService {
         return MoveMapper.mapToMoveResponse(move);
     }
 
-    public MoveResponse saveMove(CreateMoveRequest createMoveRequest) {
-        Move move = MoveMapper.mapToMove(createMoveRequest);
+    public MoveResponse saveMove(CreateMoveRequest request) {
+        Move move = MoveMapper.mapToMove(request);
 
         if (moveRepository.findByNameIgnoreCase(move.getName()).isPresent()) {
             throw new DuplicateResourceException("Move with name " + move.getName() + " already exists");
         }
 
-        moveRepository.save(move);
-        return MoveMapper.mapToMoveResponse(move);
+        Move saved = moveRepository.save(move);
+
+        return MoveMapper.mapToMoveResponse(saved);
     }
 }

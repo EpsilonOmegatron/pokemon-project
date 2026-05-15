@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface PokemonRepository extends JpaRepository<Pokemon, Integer> {
 
-    Optional<Pokemon> findPokemonByName(String name);
+    Optional<Pokemon> findByNameIgnoreCase(String name);
 }

@@ -10,10 +10,10 @@ public class AbilityMapper {
         return new AbilityResponse(ability.getId(), ability.getName(), ability.getDescription());
     }
 
-    public static Ability mapToAbility(CreateAbilityRequest abilityRequest) {
+    public static Ability mapToAbility(CreateAbilityRequest request) {
         Ability ability = new Ability();
-        ability.setName(abilityRequest.name());
-        ability.setDescription(abilityRequest.description());
+        ability.setName(request.name());
+        ability.setDescription(request.description());
         return ability;
     }
 }
