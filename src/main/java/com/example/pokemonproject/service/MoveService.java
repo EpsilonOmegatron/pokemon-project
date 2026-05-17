@@ -9,6 +9,7 @@ import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.MoveRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class MoveService {
         return MoveMapper.mapToMoveResponse(move);
     }
 
+    @Transactional
     public MoveResponse saveMove(CreateMoveRequest request) {
         Move move = MoveMapper.mapToMove(request);
 

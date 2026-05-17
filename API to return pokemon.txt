@@ -1,3 +1,0 @@
-API to return pokemon
-Search pokemon: by type, 
-users to favorite pokemons,

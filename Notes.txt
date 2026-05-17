@@ -1,0 +1,23 @@
+API to return information regarding the video-game series Pokémon, modeled after the PokémonDB website.
+
+To-do:
+- Revise structure of entities, attempting to apply best practices
+- Postman collection (instead of using IntelliJ to try out the endpoints)
+- Springboot field validation
+
+- User functionality:
+-- Login, Register, implement security (JWT) once basic functionality is implemented, including role designation for endpoints
+-- Store a list of favorite Pokémon
+
+- Pokémon functionality:
+-- define a Pokémon's learnset (add moves to Pokémon)
+-- define a Pokémon's abilities (add abilities to Pokémon, maybe flag some as hidden abilities later)
+
+- Ability and Move functionality:
+-- Update and delete methods
+
+
+Bonus:
+- Type chart calculator (What a type is effective and ineffective against)
+- Some interesting queries (Get all Pokémon by a specific type, get all Pokémon that can learn X move, etc.)
+- Expand user favorite Pokémon to custom Pokémon with levels, abilities and stuff per user, like an actual box

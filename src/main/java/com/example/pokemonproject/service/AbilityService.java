@@ -9,6 +9,7 @@ import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.AbilityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class AbilityService {
         return AbilityMapper.mapToAbilityResponse(ability);
     }
 
+    @Transactional
     public AbilityResponse saveAbility(CreateAbilityRequest request) {
         Ability ability = AbilityMapper.mapToAbility(request);
 

@@ -39,23 +39,23 @@ public class PokemonMapper {
         );
     }
 
-    public static Pokemon mapToPokemon(CreatePokemonRequest createPokemonRequest, Pokemon evolvesFrom) {
+    public static Pokemon mapToPokemon(CreatePokemonRequest request, Pokemon evolvesFrom) {
 
         Pokemon pokemon = new Pokemon();
 
         // Name
-        pokemon.setName(createPokemonRequest.name());
+        pokemon.setName(request.name());
 
         // Types
-        pokemon.setTypes(createPokemonRequest.types());
+        pokemon.setTypes(request.types());
 
         // Stats
-        pokemon.setHp(createPokemonRequest.hp());
-        pokemon.setAtk(createPokemonRequest.atk());
-        pokemon.setSpAtk(createPokemonRequest.spAtk());
-        pokemon.setDef(createPokemonRequest.def());
-        pokemon.setSpDef(createPokemonRequest.spDef());
-        pokemon.setSpe(createPokemonRequest.spe());
+        pokemon.setHp(request.hp());
+        pokemon.setAtk(request.atk());
+        pokemon.setSpAtk(request.spAtk());
+        pokemon.setDef(request.def());
+        pokemon.setSpDef(request.spDef());
+        pokemon.setSpe(request.spe());
 
         // Evolves from
         if (evolvesFrom != null) {
@@ -63,10 +63,10 @@ public class PokemonMapper {
         }
 
         // Evolution Trigger
-        pokemon.setEvolutionTrigger(createPokemonRequest.evolutionTrigger());
+        pokemon.setEvolutionTrigger(request.evolutionTrigger());
 
 //        // Moves
-//        Set<Move> moves = createPokemonRequest.moves()
+//        Set<Move> moves = request.moves()
 //                .stream()
 //                .map(name -> moveRepository.findByNameIgnoreCase(name)
 //                        .orElseThrow(() -> new ResourceNotFoundException("Move with name " + name + " doesn't exist.")))
@@ -74,7 +74,7 @@ public class PokemonMapper {
 //        pokemon.setMoves(moves);
 //
 //        // Abilities
-//        Set<Ability> abilities = createPokemonRequest.abilities()
+//        Set<Ability> abilities = request.abilities()
 //                .stream()
 //                .map(name -> abilityRepository.findByNameIgnoreCase(name)
 //                        .orElseThrow(() -> new ResourceNotFoundException("Ability with name " + name + " doesn't exist.")))
