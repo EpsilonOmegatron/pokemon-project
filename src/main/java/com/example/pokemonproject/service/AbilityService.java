@@ -18,9 +18,9 @@ import java.util.List;
 @AllArgsConstructor
 public class AbilityService {
 
-    private AbilityRepository abilityRepository;
+    private final AbilityRepository abilityRepository;
 
-    private Ability findAbilityByName(String name) {
+    public Ability findAbilityByName(String name) {
         return abilityRepository.findByNameIgnoreCase(name)
                 .orElseThrow(() -> new ResourceNotFoundException("Ability with name " + name + " doesn't exist."));
     }
@@ -71,10 +71,7 @@ public class AbilityService {
 
     @Transactional
     public String delete(String name) {
-        Ability ability = findAbilityByName(name);
-
-        abilityRepository.delete(ability);
-
+        abilityRepository.delete(findAbilityByName(name));
         return "Ability deleted successfully!";
     }
 }

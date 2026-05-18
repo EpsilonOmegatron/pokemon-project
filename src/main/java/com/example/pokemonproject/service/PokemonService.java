@@ -1,7 +1,9 @@
 package com.example.pokemonproject.service;
 
 import com.example.pokemonproject.dto.mapper.PokemonMapper;
-import com.example.pokemonproject.dto.request.CreatePokemonRequest;
+import com.example.pokemonproject.dto.request.pokemon.AddPokemonAbilityRequest;
+import com.example.pokemonproject.dto.request.pokemon.AddPokemonMoveRequest;
+import com.example.pokemonproject.dto.request.pokemon.CreatePokemonRequest;
 import com.example.pokemonproject.dto.response.PokemonResponse;
 import com.example.pokemonproject.entity.Pokemon;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
@@ -16,21 +18,28 @@ import java.util.List;
 @AllArgsConstructor
 public class PokemonService {
 
-    private PokemonRepository pokemonRepository;
+    private final PokemonRepository pokemonRepository;
+    private final AbilityService abilityService;
+    private final MoveService moveService;
 
-    public List<PokemonResponse> getAllPokemon() {
+    public Pokemon findPokemonByName(String name) {
+        return pokemonRepository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new ResourceNotFoundException("Pokemon with name " + name + " doesn't exist."));
+    }
+
+    public List<PokemonResponse> getAll() {
         List<Pokemon> pokemon = pokemonRepository.findAll();
         return pokemon.stream().map(PokemonMapper::mapToPokemonResponse).toList();
     }
 
-    public PokemonResponse getPokemonByName(String name) {
-        Pokemon pokemon = pokemonRepository.findByNameIgnoreCase(name)
-                .orElseThrow(() -> new ResourceNotFoundException("Pokemon with name " + name + " doesn't exist."));
+    public PokemonResponse getByName(String name) {
+        Pokemon pokemon = findPokemonByName(name);
         return PokemonMapper.mapToPokemonResponse(pokemon);
     }
 
+
     @Transactional
-    public PokemonResponse createPokemon(CreatePokemonRequest request) {
+    public PokemonResponse save(CreatePokemonRequest request) {
 
         Pokemon pre_evo = null;
 
@@ -43,5 +52,45 @@ public class PokemonService {
         Pokemon saved = pokemonRepository.save(pokemon);
 
         return PokemonMapper.mapToPokemonResponse(saved);
+    }
+
+    @Transactional
+    public PokemonResponse addMoves(AddPokemonMoveRequest request) {
+        Pokemon pokemon = findPokemonByName(request.pokemon());
+
+        for (String moveName : request.moves()) {
+            pokemon.getMoves().add(moveService.findMoveByName(moveName));
+        }
+
+        Pokemon saved = pokemonRepository.save(pokemon);
+
+        return PokemonMapper.mapToPokemonResponse(saved);
+    }
+
+    @Transactional
+    public PokemonResponse addAbilities(AddPokemonAbilityRequest request) {
+        Pokemon pokemon = findPokemonByName(request.pokemon());
+
+        for (String abilityName : request.abilities()) {
+            pokemon.getAbilities().add(abilityService.findAbilityByName(abilityName));
+        }
+
+        Pokemon saved = pokemonRepository.save(pokemon);
+
+        return PokemonMapper.mapToPokemonResponse(saved);
+    }
+
+//    @Transactional
+//    public PokemonResponse update(UpdatePokemonRequest){
+//        return
+//    }
+
+    @Transactional
+    public String delete(String name) {
+        Pokemon pokemon = findPokemonByName(name);
+
+        pokemonRepository.delete(pokemon);
+
+        return "Pokemon deleted successfully";
     }
 }

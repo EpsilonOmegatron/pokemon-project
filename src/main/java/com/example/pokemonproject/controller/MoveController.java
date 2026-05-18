@@ -4,7 +4,7 @@ import com.example.pokemonproject.dto.request.move.CreateMoveRequest;
 import com.example.pokemonproject.dto.request.move.UpdateMoveRequest;
 import com.example.pokemonproject.dto.response.MoveResponse;
 import com.example.pokemonproject.service.MoveService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/moves")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MoveController {
 
-    private MoveService moveService;
+    private final MoveService moveService;
 
     @GetMapping
     public ResponseEntity<List<MoveResponse>> getAllMoves() {

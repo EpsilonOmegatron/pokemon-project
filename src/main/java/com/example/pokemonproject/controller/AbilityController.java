@@ -4,7 +4,7 @@ import com.example.pokemonproject.dto.request.ability.CreateAbilityRequest;
 import com.example.pokemonproject.dto.request.ability.UpdateAbilityRequest;
 import com.example.pokemonproject.dto.response.AbilityResponse;
 import com.example.pokemonproject.service.AbilityService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/abilities")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AbilityController {
 
-    private AbilityService abilityService;
+    private final AbilityService abilityService;
 
     @GetMapping
     public ResponseEntity<List<AbilityResponse>> getAbilities() {

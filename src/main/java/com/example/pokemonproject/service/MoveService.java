@@ -18,9 +18,9 @@ import java.util.List;
 @AllArgsConstructor
 public class MoveService {
 
-    private MoveRepository moveRepository;
+    private final MoveRepository moveRepository;
 
-    private Move findMoveByName(String name) {
+    public Move findMoveByName(String name) {
         return moveRepository.findByNameIgnoreCase(name)
                 .orElseThrow(() -> new ResourceNotFoundException("Move with name " + name + " doesn't exist."));
     }
@@ -90,10 +90,7 @@ public class MoveService {
 
     @Transactional
     public String delete(String name) {
-        Move move = findMoveByName(name);
-
-        moveRepository.delete(move);
-
+        moveRepository.delete(findMoveByName(name));
         return "Move deleted successfully!";
     }
 }

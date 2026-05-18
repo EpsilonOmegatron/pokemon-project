@@ -1,4 +1,4 @@
-package com.example.pokemonproject.dto.request;
+package com.example.pokemonproject.dto.request.pokemon;
 
 import com.example.pokemonproject.enums.Type;
 
