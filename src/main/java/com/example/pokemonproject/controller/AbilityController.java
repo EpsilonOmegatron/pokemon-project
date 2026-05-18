@@ -1,6 +1,7 @@
 package com.example.pokemonproject.controller;
 
-import com.example.pokemonproject.dto.request.CreateAbilityRequest;
+import com.example.pokemonproject.dto.request.ability.CreateAbilityRequest;
+import com.example.pokemonproject.dto.request.ability.UpdateAbilityRequest;
 import com.example.pokemonproject.dto.response.AbilityResponse;
 import com.example.pokemonproject.service.AbilityService;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class AbilityController {
 
     @GetMapping
     public ResponseEntity<List<AbilityResponse>> getAbilities() {
-        return ResponseEntity.ok(abilityService.getAllAbilities());
+        return ResponseEntity.ok(abilityService.getAll());
     }
 
     @GetMapping("/{name}")
@@ -28,6 +29,16 @@ public class AbilityController {
 
     @PostMapping
     public ResponseEntity<AbilityResponse> createAbility(@RequestBody CreateAbilityRequest request) {
-        return ResponseEntity.ok(abilityService.saveAbility(request));
+        return ResponseEntity.ok(abilityService.save(request));
+    }
+
+    @DeleteMapping("/{name}")
+    public ResponseEntity<String> deleteAbilityByName(@PathVariable String name) {
+        return ResponseEntity.ok(abilityService.delete(name));
+    }
+
+    @PatchMapping("/{name}")
+    public ResponseEntity<AbilityResponse> updateAbilityByName(@PathVariable String name, @RequestBody UpdateAbilityRequest request) {
+        return ResponseEntity.ok(abilityService.update(name, request));
     }
 }

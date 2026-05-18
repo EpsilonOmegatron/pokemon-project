@@ -1,0 +1,21 @@
+$kind: http-request
+name: Create Move
+method: POST
+url: '{{baseUrl}}/api/moves'
+description: 'Create a new move. damageCategory must be one of: PHYSICAL, SPECIAL, STATUS. type must be one of: NORMAL, FIRE, WATER, ELECTRIC, GRASS, ICE, FIGHTING, POISON, GROUND, FLYING, PSYCHIC, BUG, ROCK, GHOST, DRAGON, DARK, STEEL, FAIRY'
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Thunderbolt",
+      "description": "A strong electric blast that may paralyze the target.",
+      "damageCategory": "SPECIAL",
+      "type": "ELECTRIC",
+      "basePower": 90,
+      "powerPoints": 15,
+      "accuracy": 100
+    }

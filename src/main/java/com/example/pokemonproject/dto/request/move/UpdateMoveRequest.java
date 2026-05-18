@@ -1,9 +1,9 @@
-package com.example.pokemonproject.dto.request;
+package com.example.pokemonproject.dto.request.move;
 
 import com.example.pokemonproject.enums.DamageCategory;
 import com.example.pokemonproject.enums.Type;
 
-public record CreateMoveRequest(
+public record UpdateMoveRequest(
         String name,
         String description,
         DamageCategory damageCategory,

@@ -1,6 +1,7 @@
 package com.example.pokemonproject.controller;
 
-import com.example.pokemonproject.dto.request.CreateMoveRequest;
+import com.example.pokemonproject.dto.request.move.CreateMoveRequest;
+import com.example.pokemonproject.dto.request.move.UpdateMoveRequest;
 import com.example.pokemonproject.dto.response.MoveResponse;
 import com.example.pokemonproject.service.MoveService;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class MoveController {
 
     @GetMapping
     public ResponseEntity<List<MoveResponse>> getAllMoves() {
-        return ResponseEntity.ok(moveService.getAllMoves());
+        return ResponseEntity.ok(moveService.getAll());
     }
 
     @GetMapping("/{name}")
@@ -28,6 +29,16 @@ public class MoveController {
 
     @PostMapping
     public ResponseEntity<MoveResponse> createMove(@RequestBody CreateMoveRequest request) {
-        return ResponseEntity.ok(moveService.saveMove(request));
+        return ResponseEntity.ok(moveService.save(request));
+    }
+
+    @DeleteMapping("/{name}")
+    public ResponseEntity<String> deleteMoveByName(@PathVariable String name) {
+        return ResponseEntity.ok(moveService.delete(name));
+    }
+
+    @PatchMapping("/{name}")
+    public ResponseEntity<MoveResponse> updateMoveByName(@PathVariable String name, @RequestBody UpdateMoveRequest request) {
+        return ResponseEntity.ok(moveService.update(name, request));
     }
 }

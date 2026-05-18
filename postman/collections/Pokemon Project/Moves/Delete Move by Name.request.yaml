@@ -1,0 +1,10 @@
+$kind: http-request
+name: Delete Move by Name
+method: DELETE
+url: '{{baseUrl}}/api/moves/:name'
+description: Delete a move by name
+order: 4000
+params:
+  - type: path
+    key: name
+    value: thunderbolt

@@ -1,0 +1,16 @@
+$kind: http-request
+name: Create Ability
+method: POST
+url: '{{baseUrl}}/api/abilities'
+description: Create a new ability
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Static",
+      "description": "May paralyze the attacker on contact."
+    }

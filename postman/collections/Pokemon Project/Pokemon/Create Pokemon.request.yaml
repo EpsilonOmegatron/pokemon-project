@@ -1,0 +1,24 @@
+$kind: http-request
+name: Create Pokemon
+method: POST
+url: '{{baseUrl}}/api/pokemon'
+description: 'Register a new Pokemon. Types must be one of: NORMAL, FIRE, WATER, ELECTRIC, GRASS, ICE, FIGHTING, POISON, GROUND, FLYING, PSYCHIC, BUG, ROCK, GHOST, DRAGON, DARK, STEEL, FAIRY'
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Pikachu",
+      "types": ["ELECTRIC"],
+      "hp": 35,
+      "atk": 55,
+      "spAtk": 50,
+      "def": 40,
+      "spDef": 50,
+      "spe": 90,
+      "evolvesFrom": "Pichu",
+      "evolutionTrigger": "LEVEL_UP"
+    }

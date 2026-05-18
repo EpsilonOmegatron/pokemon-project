@@ -1,6 +1,6 @@
 package com.example.pokemonproject.dto.mapper;
 
-import com.example.pokemonproject.dto.request.CreateMoveRequest;
+import com.example.pokemonproject.dto.request.move.CreateMoveRequest;
 import com.example.pokemonproject.dto.response.MoveResponse;
 import com.example.pokemonproject.entity.Move;
 

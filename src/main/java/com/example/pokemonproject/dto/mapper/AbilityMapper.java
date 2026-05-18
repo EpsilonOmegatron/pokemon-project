@@ -1,6 +1,6 @@
 package com.example.pokemonproject.dto.mapper;
 
-import com.example.pokemonproject.dto.request.CreateAbilityRequest;
+import com.example.pokemonproject.dto.request.ability.CreateAbilityRequest;
 import com.example.pokemonproject.dto.response.AbilityResponse;
 import com.example.pokemonproject.entity.Ability;
 
