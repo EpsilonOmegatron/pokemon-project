@@ -4,6 +4,7 @@ import com.example.pokemonproject.dto.request.ability.CreateAbilityRequest;
 import com.example.pokemonproject.dto.request.ability.UpdateAbilityRequest;
 import com.example.pokemonproject.dto.response.AbilityResponse;
 import com.example.pokemonproject.service.AbilityService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class AbilityController {
     }
 
     @PostMapping
-    public ResponseEntity<AbilityResponse> createAbility(@RequestBody CreateAbilityRequest request) {
+    public ResponseEntity<AbilityResponse> createAbility(@RequestBody @Valid CreateAbilityRequest request) {
         return ResponseEntity.ok(abilityService.save(request));
     }
 
@@ -38,7 +39,7 @@ public class AbilityController {
     }
 
     @PatchMapping("/{name}")
-    public ResponseEntity<AbilityResponse> updateAbilityByName(@PathVariable String name, @RequestBody UpdateAbilityRequest request) {
+    public ResponseEntity<AbilityResponse> updateAbilityByName(@PathVariable String name, @RequestBody @Valid UpdateAbilityRequest request) {
         return ResponseEntity.ok(abilityService.update(name, request));
     }
 }

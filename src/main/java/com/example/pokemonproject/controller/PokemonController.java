@@ -5,6 +5,7 @@ import com.example.pokemonproject.dto.request.pokemon.CreatePokemonRequest;
 import com.example.pokemonproject.dto.request.pokemon.UpdatePokemonRequest;
 import com.example.pokemonproject.dto.response.PokemonResponse;
 import com.example.pokemonproject.service.PokemonService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,22 +31,22 @@ public class PokemonController {
     }
 
     @PostMapping
-    public ResponseEntity<PokemonResponse> registerNewPokemon(@RequestBody CreatePokemonRequest request) {
+    public ResponseEntity<PokemonResponse> registerNewPokemon(@RequestBody @Valid CreatePokemonRequest request) {
         return ResponseEntity.ok(pokemonService.save(request));
     }
 
     @PatchMapping("/{name}")
-    public ResponseEntity<PokemonResponse> updatePokemon(@PathVariable String name, @RequestBody UpdatePokemonRequest request) {
+    public ResponseEntity<PokemonResponse> updatePokemon(@PathVariable String name, @RequestBody @Valid UpdatePokemonRequest request) {
         return ResponseEntity.ok(pokemonService.update(name, request));
     }
 
     @PatchMapping("/{name}/moves")
-    public ResponseEntity<PokemonResponse> manageMoves(@PathVariable String name, @RequestBody AbilityMoveRequest request) {
+    public ResponseEntity<PokemonResponse> manageMoves(@PathVariable String name, @RequestBody @Valid AbilityMoveRequest request) {
         return ResponseEntity.ok(pokemonService.manageMoves(name, request));
     }
 
     @PatchMapping("/{name}/abilities")
-    public ResponseEntity<PokemonResponse> manageAbilities(@PathVariable String name, @RequestBody AbilityMoveRequest request) {
+    public ResponseEntity<PokemonResponse> manageAbilities(@PathVariable String name, @RequestBody @Valid AbilityMoveRequest request) {
         return ResponseEntity.ok(pokemonService.manageAbilities(name, request));
     }
 

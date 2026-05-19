@@ -1,4 +1,16 @@
 package com.example.pokemonproject.dto.request.user;
 
-public record CreateUserRequest(String username, String password) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record CreateUserRequest(
+
+        @NotBlank(message = "Username is required")
+        @Size(max = 50, message = "Username must be <= 50 characters")
+        String username,
+
+        @NotBlank(message = "Password is required")
+        @Size(max = 255, message = "Password must be <= 255 characters")
+        String password
+) {
 }

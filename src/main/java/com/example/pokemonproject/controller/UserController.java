@@ -5,6 +5,7 @@ import com.example.pokemonproject.dto.request.user.FavoritePokemonRequest;
 import com.example.pokemonproject.dto.request.user.UpdateUserRequest;
 import com.example.pokemonproject.dto.response.UserResponse;
 import com.example.pokemonproject.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,17 +30,17 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> create(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<UserResponse> create(@RequestBody @Valid CreateUserRequest request) {
         return ResponseEntity.ok(userService.save(request));
     }
 
     @PostMapping("/{username}/favorites")
-    public ResponseEntity<UserResponse> manageFavoritePokemon(@PathVariable String username, @RequestBody FavoritePokemonRequest request) {
+    public ResponseEntity<UserResponse> manageFavoritePokemon(@PathVariable String username, @RequestBody @Valid FavoritePokemonRequest request) {
         return ResponseEntity.ok(userService.manageFavorites(username, request));
     }
 
     @PatchMapping("/{username}")
-    public ResponseEntity<UserResponse> update(@PathVariable String username, @RequestBody UpdateUserRequest request) {
+    public ResponseEntity<UserResponse> update(@PathVariable String username, @RequestBody @Valid UpdateUserRequest request) {
         return ResponseEntity.ok(userService.update(username, request));
     }
 

@@ -4,6 +4,7 @@ import com.example.pokemonproject.dto.request.move.CreateMoveRequest;
 import com.example.pokemonproject.dto.request.move.UpdateMoveRequest;
 import com.example.pokemonproject.dto.response.MoveResponse;
 import com.example.pokemonproject.service.MoveService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class MoveController {
     }
 
     @PostMapping
-    public ResponseEntity<MoveResponse> createMove(@RequestBody CreateMoveRequest request) {
+    public ResponseEntity<MoveResponse> createMove(@RequestBody @Valid CreateMoveRequest request) {
         return ResponseEntity.ok(moveService.save(request));
     }
 
@@ -38,7 +39,7 @@ public class MoveController {
     }
 
     @PatchMapping("/{name}")
-    public ResponseEntity<MoveResponse> updateMoveByName(@PathVariable String name, @RequestBody UpdateMoveRequest request) {
+    public ResponseEntity<MoveResponse> updateMoveByName(@PathVariable String name, @RequestBody @Valid UpdateMoveRequest request) {
         return ResponseEntity.ok(moveService.update(name, request));
     }
 }

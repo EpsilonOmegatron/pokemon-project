@@ -1,4 +1,13 @@
 package com.example.pokemonproject.dto.request.user;
 
-public record UpdateUserRequest(String username, String password) {
+import jakarta.validation.constraints.Size;
+
+public record UpdateUserRequest(
+
+        @Size(max = 50, message = "Username must be <= 50 characters")
+        String username,
+
+        @Size(max = 255, message = "Password must be <= 255 characters")
+        String password
+) {
 }

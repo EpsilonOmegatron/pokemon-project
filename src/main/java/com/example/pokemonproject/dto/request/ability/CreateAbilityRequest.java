@@ -1,4 +1,16 @@
 package com.example.pokemonproject.dto.request.ability;
 
-public record CreateAbilityRequest(String name, String description) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record CreateAbilityRequest(
+
+        @NotBlank(message = "Ability name is required")
+        @Size(max = 50, message = "Ability name must be <= 50 characters")
+        String name,
+
+        @NotBlank(message = "Ability description is required")
+        @Size(max = 100, message = "Ability description must be <= 100 characters")
+        String description
+) {
 }
