@@ -33,9 +33,9 @@ public class UserController {
         return ResponseEntity.ok(userService.save(request));
     }
 
-    @PostMapping
-    public ResponseEntity<UserResponse> manageFavoritePokemon(@RequestBody FavoritePokemonRequest request) {
-        return ResponseEntity.ok(userService.manageFavorites(request));
+    @PostMapping("/{username}/favorites")
+    public ResponseEntity<UserResponse> manageFavoritePokemon(@PathVariable String username, @RequestBody FavoritePokemonRequest request) {
+        return ResponseEntity.ok(userService.manageFavorites(username, request));
     }
 
     @PatchMapping("/{username}")

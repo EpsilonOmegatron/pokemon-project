@@ -50,9 +50,9 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse manageFavorites(FavoritePokemonRequest request) {
+    public UserResponse manageFavorites(String username, FavoritePokemonRequest request) {
 
-        User user = findUserByUsername(request.username());
+        User user = findUserByUsername(username);
 
         for (String pokemonName : request.pokemon()) {
             Pokemon pokemon = pokemonService.findPokemonByName(pokemonName);
