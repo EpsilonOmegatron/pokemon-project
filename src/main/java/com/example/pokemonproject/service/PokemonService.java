@@ -1,10 +1,12 @@
 package com.example.pokemonproject.service;
 
 import com.example.pokemonproject.dto.mapper.PokemonMapper;
-import com.example.pokemonproject.dto.request.pokemon.AddPokemonAbilityRequest;
-import com.example.pokemonproject.dto.request.pokemon.AddPokemonMoveRequest;
+import com.example.pokemonproject.dto.request.pokemon.AbilityMoveRequest;
 import com.example.pokemonproject.dto.request.pokemon.CreatePokemonRequest;
+import com.example.pokemonproject.dto.request.pokemon.UpdatePokemonRequest;
 import com.example.pokemonproject.dto.response.PokemonResponse;
+import com.example.pokemonproject.entity.Ability;
+import com.example.pokemonproject.entity.Move;
 import com.example.pokemonproject.entity.Pokemon;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.PokemonRepository;
@@ -45,7 +47,7 @@ public class PokemonService {
 
         if (request.evolvesFrom() != null && !request.evolvesFrom().isBlank()) {
             pre_evo = pokemonRepository.findByNameIgnoreCase(request.evolvesFrom())
-                    .orElseThrow(() -> new ResourceNotFoundException("Pre-evo pokemon with name " + request.evolvesFrom() + " does not exist."));
+                    .orElseThrow(() -> new ResourceNotFoundException("Pre-evo Pokemon with name " + request.evolvesFrom() + " does not exist."));
         }
         Pokemon pokemon = PokemonMapper.mapToPokemon(request, pre_evo);
 
@@ -55,11 +57,15 @@ public class PokemonService {
     }
 
     @Transactional
-    public PokemonResponse addMoves(AddPokemonMoveRequest request) {
-        Pokemon pokemon = findPokemonByName(request.pokemon());
+    public PokemonResponse manageMoves(String name, AbilityMoveRequest request) {
+        Pokemon pokemon = findPokemonByName(name);
 
-        for (String moveName : request.moves()) {
-            pokemon.getMoves().add(moveService.findMoveByName(moveName));
+        for (String moveName : request.abilitiesOrMoves()) {
+            Move move = moveService.findMoveByName(moveName);
+            switch (request.action()) {
+                case ADD -> pokemon.getMoves().add(move);
+                case REMOVE -> pokemon.getMoves().remove(move);
+            }
         }
 
         Pokemon saved = pokemonRepository.save(pokemon);
@@ -68,11 +74,15 @@ public class PokemonService {
     }
 
     @Transactional
-    public PokemonResponse addAbilities(AddPokemonAbilityRequest request) {
-        Pokemon pokemon = findPokemonByName(request.pokemon());
+    public PokemonResponse manageAbilities(String name, AbilityMoveRequest request) {
+        Pokemon pokemon = findPokemonByName(name);
 
-        for (String abilityName : request.abilities()) {
-            pokemon.getAbilities().add(abilityService.findAbilityByName(abilityName));
+        for (String abilityName : request.abilitiesOrMoves()) {
+            Ability ability = abilityService.findAbilityByName(abilityName);
+            switch (request.action()) {
+                case ADD -> pokemon.getAbilities().add(ability);
+                case REMOVE -> pokemon.getAbilities().remove(ability);
+            }
         }
 
         Pokemon saved = pokemonRepository.save(pokemon);
@@ -80,10 +90,63 @@ public class PokemonService {
         return PokemonMapper.mapToPokemonResponse(saved);
     }
 
-//    @Transactional
-//    public PokemonResponse update(UpdatePokemonRequest){
-//        return
-//    }
+    @Transactional
+    public PokemonResponse update(String pokemonName, UpdatePokemonRequest request) {
+
+        Pokemon pokemon = findPokemonByName(pokemonName);
+
+        if (request.name() != null && !request.name().isBlank()) {
+            pokemon.setName(request.name());
+        }
+
+        if (request.types() != null && !request.types().isEmpty()) {
+            pokemon.setTypes(request.types());
+        }
+
+        if (request.hp() != null) {
+            pokemon.setHp(request.hp());
+        }
+
+        if (request.atk() != null) {
+            pokemon.setAtk(request.atk());
+        }
+
+        if (request.spAtk() != null) {
+            pokemon.setSpAtk(request.spAtk());
+        }
+
+        if (request.def() != null) {
+            pokemon.setDef(request.def());
+        }
+
+        if (request.spDef() != null) {
+            pokemon.setSpDef(request.spDef());
+        }
+
+        if (request.spe() != null) {
+            pokemon.setSpe(request.spe());
+        }
+
+        if (request.evolutionTrigger() != null) {
+            pokemon.setEvolutionTrigger(request.evolutionTrigger());
+        }
+
+        if (request.evolvesFrom() != null) {
+
+            if (request.evolvesFrom().isBlank()) {
+                pokemon.setEvolvesFrom(null);
+            } else {
+
+                Pokemon preEvolution = findPokemonByName(request.evolvesFrom());
+
+                pokemon.setEvolvesFrom(preEvolution);
+            }
+        }
+
+        Pokemon saved = pokemonRepository.save(pokemon);
+
+        return PokemonMapper.mapToPokemonResponse(saved);
+    }
 
     @Transactional
     public String delete(String name) {

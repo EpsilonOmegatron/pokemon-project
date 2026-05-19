@@ -30,7 +30,7 @@ public class MoveService {
         return moves.stream().map(MoveMapper::mapToMoveResponse).toList();
     }
 
-    public MoveResponse getMoveByName(String name) {
+    public MoveResponse getByName(String name) {
         Move move = findMoveByName(name);
         return MoveMapper.mapToMoveResponse(move);
     }

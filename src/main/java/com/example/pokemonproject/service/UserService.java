@@ -1,10 +1,11 @@
 package com.example.pokemonproject.service;
 
 import com.example.pokemonproject.dto.mapper.UserMapper;
-import com.example.pokemonproject.dto.request.user.AddFavoritePokemonRequest;
 import com.example.pokemonproject.dto.request.user.CreateUserRequest;
+import com.example.pokemonproject.dto.request.user.FavoritePokemonRequest;
 import com.example.pokemonproject.dto.request.user.UpdateUserRequest;
 import com.example.pokemonproject.dto.response.UserResponse;
+import com.example.pokemonproject.entity.Pokemon;
 import com.example.pokemonproject.entity.User;
 import com.example.pokemonproject.exception.DuplicateResourceException;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
@@ -49,11 +50,17 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse addFavoritePokemon(AddFavoritePokemonRequest request) {
+    public UserResponse manageFavorites(FavoritePokemonRequest request) {
+
         User user = findUserByUsername(request.username());
 
         for (String pokemonName : request.pokemon()) {
-            user.getPokemon().add(pokemonService.findPokemonByName(pokemonName));
+            Pokemon pokemon = pokemonService.findPokemonByName(pokemonName);
+
+            switch (request.action()) {
+                case ADD -> user.getPokemon().add(pokemon);
+                case REMOVE -> user.getPokemon().remove(pokemon);
+            }
         }
 
         userRepository.save(user);
@@ -66,13 +73,10 @@ public class UserService {
 
         User user = findUserByUsername(username);
 
-        if (request.username() != null &&
-                !request.username().equalsIgnoreCase(user.getUsername())) {
+        if (request.username() != null && !request.username().equalsIgnoreCase(user.getUsername())) {
 
             if (userRepository.findByUsername(request.username()).isPresent()) {
-                throw new DuplicateResourceException(
-                        "User with username " + request.username() + " already exists."
-                );
+                throw new DuplicateResourceException("User with username " + request.username() + " already exists.");
             }
 
             user.setUsername(request.username());

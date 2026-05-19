@@ -1,8 +1,8 @@
 package com.example.pokemonproject.controller;
 
-import com.example.pokemonproject.dto.request.pokemon.AddPokemonAbilityRequest;
-import com.example.pokemonproject.dto.request.pokemon.AddPokemonMoveRequest;
+import com.example.pokemonproject.dto.request.pokemon.AbilityMoveRequest;
 import com.example.pokemonproject.dto.request.pokemon.CreatePokemonRequest;
+import com.example.pokemonproject.dto.request.pokemon.UpdatePokemonRequest;
 import com.example.pokemonproject.dto.response.PokemonResponse;
 import com.example.pokemonproject.service.PokemonService;
 import lombok.RequiredArgsConstructor;
@@ -34,14 +34,19 @@ public class PokemonController {
         return ResponseEntity.ok(pokemonService.save(request));
     }
 
-    @PatchMapping("/moves")
-    public ResponseEntity<PokemonResponse> addMoveToPokemon(@RequestBody AddPokemonMoveRequest request) {
-        return ResponseEntity.ok(pokemonService.addMoves(request));
+    @PatchMapping("/{name}")
+    public ResponseEntity<PokemonResponse> updatePokemon(@PathVariable String name, @RequestBody UpdatePokemonRequest request) {
+        return ResponseEntity.ok(pokemonService.update(name, request));
     }
 
-    @PatchMapping("/abilities")
-    public ResponseEntity<PokemonResponse> addAbilitiesToPokemon(@RequestBody AddPokemonAbilityRequest request) {
-        return ResponseEntity.ok(pokemonService.addAbilities(request));
+    @PatchMapping("/{name}/moves")
+    public ResponseEntity<PokemonResponse> manageMoves(@PathVariable String name, @RequestBody AbilityMoveRequest request) {
+        return ResponseEntity.ok(pokemonService.manageMoves(name, request));
+    }
+
+    @PatchMapping("/{name}/abilities")
+    public ResponseEntity<PokemonResponse> manageAbilities(@PathVariable String name, @RequestBody AbilityMoveRequest request) {
+        return ResponseEntity.ok(pokemonService.manageAbilities(name, request));
     }
 
     @DeleteMapping("/{name}")

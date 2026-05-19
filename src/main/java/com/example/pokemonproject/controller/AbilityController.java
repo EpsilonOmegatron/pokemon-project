@@ -24,7 +24,7 @@ public class AbilityController {
 
     @GetMapping("/{name}")
     public ResponseEntity<AbilityResponse> getAbilityByName(@PathVariable String name) {
-        return ResponseEntity.ok(abilityService.getAbilityByName(name));
+        return ResponseEntity.ok(abilityService.getByName(name));
     }
 
     @PostMapping

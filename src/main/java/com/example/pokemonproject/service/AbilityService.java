@@ -30,7 +30,7 @@ public class AbilityService {
         return abilities.stream().map(AbilityMapper::mapToAbilityResponse).toList();
     }
 
-    public AbilityResponse getAbilityByName(String name) {
+    public AbilityResponse getByName(String name) {
         Ability ability = findAbilityByName(name);
         return AbilityMapper.mapToAbilityResponse(ability);
     }

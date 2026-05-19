@@ -1,7 +1,7 @@
 package com.example.pokemonproject.controller;
 
-import com.example.pokemonproject.dto.request.user.AddFavoritePokemonRequest;
 import com.example.pokemonproject.dto.request.user.CreateUserRequest;
+import com.example.pokemonproject.dto.request.user.FavoritePokemonRequest;
 import com.example.pokemonproject.dto.request.user.UpdateUserRequest;
 import com.example.pokemonproject.dto.response.UserResponse;
 import com.example.pokemonproject.service.UserService;
@@ -34,8 +34,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> addFavoritePokemon(@RequestBody AddFavoritePokemonRequest request) {
-        return ResponseEntity.ok(userService.addFavoritePokemon(request));
+    public ResponseEntity<UserResponse> manageFavoritePokemon(@RequestBody FavoritePokemonRequest request) {
+        return ResponseEntity.ok(userService.manageFavorites(request));
     }
 
     @PatchMapping("/{username}")
