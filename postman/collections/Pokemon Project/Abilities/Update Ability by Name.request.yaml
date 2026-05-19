@@ -1,20 +1,21 @@
 $kind: http-request
 name: Update Ability by Name
 method: PATCH
-url: '{{baseUrl}}/api/abilities/:name'
+url: "{{baseUrl}}/api/abilities/:name"
 description: Update an ability by name
+pathVariables:
+  name: static
 order: 5000
 params:
   - type: path
     key: name
     value: static
 headers:
-  - key: Content-Type
-    value: application/json
+  Content-Type: application/json
 body:
   type: json
   content: |-
     {
       "name": "Static",
-      "description": "May paralyze the attacker on contact. Updated description."
+      "description": "Updated description"
     }

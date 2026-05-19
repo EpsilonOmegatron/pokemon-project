@@ -21,7 +21,7 @@ public record CreateMoveRequest(
         Type type,
 
         @NotNull(message = "Base power is required")
-        @Min(1) @Max(250)
+        @Min(0) @Max(250)
         Integer basePower,
 
         @NotNull(message = "Power points are required")

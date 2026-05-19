@@ -1,0 +1,9 @@
+$kind: http-request
+name: Delete Pokemon by Name
+method: DELETE
+url: '{{baseUrl}}/api/pokemon/:name'
+description: Delete a Pokemon by name
+order: 7000
+pathVariables:
+  - key: name
+    value: pikachu

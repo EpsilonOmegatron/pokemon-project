@@ -2,6 +2,7 @@ package com.example.pokemonproject.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +26,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleUnreadableHttpMessage(HttpMessageNotReadableException e) {
+        ErrorResponse error = new ErrorResponse("HTTP_ERROR", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException e) {
 
@@ -35,7 +42,7 @@ public class GlobalExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
 
-        ErrorResponse error = new ErrorResponse("VALIDATION_ERROR", e.getMessage(), errors);
+        ErrorResponse error = new ErrorResponse("VALIDATION_ERROR", "Invalid fields", errors);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }

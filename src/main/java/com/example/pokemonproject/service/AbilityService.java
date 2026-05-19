@@ -52,7 +52,7 @@ public class AbilityService {
     public AbilityResponse update(String abilityName, UpdateAbilityRequest request) {
         Ability ability = findAbilityByName(abilityName);
 
-        if (request.name() != null && !request.name().equalsIgnoreCase(ability.getName())) {
+        if (request.name() != null && !request.name().equals(ability.getName())) {
             if (abilityRepository.findByNameIgnoreCase(request.name()).isPresent()) {
                 throw new DuplicateResourceException("Ability with name " + request.name() + " already exists.");
             }
