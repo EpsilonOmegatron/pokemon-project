@@ -44,7 +44,7 @@ public class JwtService {
         Jwts.parser()
                 .verifyWith(key())
                 .build()
-                .parse(token);
+                .parseSignedClaims(token);
         return true;
     }
 }

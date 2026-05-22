@@ -1,8 +1,10 @@
 $kind: http-request
 name: Create User
 method: POST
-url: "{{baseUrl}}/api/users"
+url: "{{baseUrl}}/api/auth/register"
 description: Register a new user
+auth:
+  type: bearer
 order: 3000
 headers:
   Content-Type: application/json
@@ -10,6 +12,6 @@ body:
   type: json
   content: |-
     {
-      "username": "Lt. Surge",
-      "password": "iWannaBeTheVeryBest"
+      "username": "Ash Ketchum",
+      "password": "iwannabetheverybest"
     }

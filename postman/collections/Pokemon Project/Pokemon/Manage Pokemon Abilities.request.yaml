@@ -1,19 +1,17 @@
 $kind: http-request
 name: Manage Pokemon Abilities
 method: PATCH
-url: '{{baseUrl}}/api/pokemon/:name/abilities'
-description: 'Add or remove abilities from a Pokemon. Action must be one of: ADD, REMOVE'
+url: "{{baseUrl}}/api/pokemon/:name/abilities"
+description: "Add or remove abilities from a Pokemon. Action must be one of: ADD, REMOVE"
 order: 6000
 pathVariables:
-  - key: name
-    value: pikachu
+  name: pichu
 headers:
-  - key: Content-Type
-    value: application/json
+  Content-Type: application/json
 body:
   type: json
   content: |-
     {
-      "abilitiesOrMoves": ["Static", "Lightning Rod"],
+      "abilitiesOrMoves": ["Static"],
       "action": "ADD"
     }

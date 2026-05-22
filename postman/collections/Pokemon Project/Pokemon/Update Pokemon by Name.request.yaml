@@ -1,23 +1,16 @@
 $kind: http-request
 name: Update Pokemon by Name
 method: PATCH
-url: '{{baseUrl}}/api/pokemon/:name'
+url: "{{baseUrl}}/api/pokemon/:name"
 description: Update a Pokemon's details by name. All fields are optional.
 order: 4000
 pathVariables:
-  - key: name
-    value: pikachu
+  name: pikachu
 headers:
-  - key: Content-Type
-    value: application/json
+  Content-Type: application/json
 body:
   type: json
   content: |-
     {
-      "hp": 45,
-      "atk": 60,
-      "spAtk": 55,
-      "def": 45,
-      "spDef": 55,
-      "spe": 95
+      "evolvesFrom": "Pichu"
     }

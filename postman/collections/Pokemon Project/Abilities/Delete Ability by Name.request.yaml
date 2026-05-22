@@ -1,8 +1,10 @@
 $kind: http-request
 name: Delete Ability by Name
 method: DELETE
-url: '{{baseUrl}}/api/abilities/:name'
+url: "{{baseUrl}}/api/abilities/:name"
 description: Delete an ability by name
+pathVariables:
+  name: Static
 order: 4000
 params:
   - type: path

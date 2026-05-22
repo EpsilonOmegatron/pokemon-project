@@ -31,6 +31,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/pokemon/**").permitAll()
+                        .requestMatchers("/api/abilities/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
