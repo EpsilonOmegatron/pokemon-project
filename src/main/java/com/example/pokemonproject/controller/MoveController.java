@@ -7,6 +7,7 @@ import com.example.pokemonproject.service.MoveService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,16 +29,19 @@ public class MoveController {
         return ResponseEntity.ok(moveService.getByName(name));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<MoveResponse> createMove(@RequestBody @Valid CreateMoveRequest request) {
         return ResponseEntity.ok(moveService.save(request));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{name}")
     public ResponseEntity<String> deleteMoveByName(@PathVariable String name) {
         return ResponseEntity.ok(moveService.delete(name));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{name}")
     public ResponseEntity<MoveResponse> updateMoveByName(@PathVariable String name, @RequestBody @Valid UpdateMoveRequest request) {
         return ResponseEntity.ok(moveService.update(name, request));

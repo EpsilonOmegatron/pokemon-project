@@ -3,7 +3,7 @@ package com.example.pokemonproject.dto.request.user;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record CreateUserRequest(
+public record UserRequest(
 
         @NotBlank(message = "Username is required")
         @Size(max = 50, message = "Username must be <= 50 characters")

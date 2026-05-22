@@ -13,7 +13,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table
 public class Pokemon {
 
     @Id

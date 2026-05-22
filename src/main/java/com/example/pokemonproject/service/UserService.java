@@ -1,7 +1,6 @@
 package com.example.pokemonproject.service;
 
 import com.example.pokemonproject.dto.mapper.UserMapper;
-import com.example.pokemonproject.dto.request.user.CreateUserRequest;
 import com.example.pokemonproject.dto.request.user.FavoritePokemonRequest;
 import com.example.pokemonproject.dto.request.user.UpdateUserRequest;
 import com.example.pokemonproject.dto.response.UserResponse;
@@ -11,6 +10,7 @@ import com.example.pokemonproject.exception.DuplicateResourceException;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +22,9 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PokemonService pokemonService;
+    private final PasswordEncoder passwordEncoder;
 
-    private User findUserByUsername(String name) {
+    public User findUserByUsername(String name) {
         return userRepository.findByUsername(name).orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
@@ -35,18 +36,6 @@ public class UserService {
     public UserResponse getByUsername(String name) {
         User user = findUserByUsername(name);
         return UserMapper.mapToUserResponse(user);
-    }
-
-    @Transactional
-    public UserResponse save(CreateUserRequest request) {
-
-        if (userRepository.findByUsername(request.username()).isPresent()) {
-            throw new DuplicateResourceException("Username already exists");
-        }
-
-        User saved = userRepository.save(UserMapper.mapToUser(request));
-
-        return UserMapper.mapToUserResponse(saved);
     }
 
     @Transactional
@@ -83,7 +72,7 @@ public class UserService {
         }
 
         if (request.password() != null) {
-            user.setPassword(request.password());
+            user.setPassword(passwordEncoder.encode(request.password()));
         }
 
         User saved = userRepository.save(user);

@@ -7,8 +7,8 @@ import com.example.pokemonproject.service.AbilityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -28,16 +28,19 @@ public class AbilityController {
         return ResponseEntity.ok(abilityService.getByName(name));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<AbilityResponse> createAbility(@RequestBody @Valid CreateAbilityRequest request) {
         return ResponseEntity.ok(abilityService.save(request));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{name}")
     public ResponseEntity<String> deleteAbilityByName(@PathVariable String name) {
         return ResponseEntity.ok(abilityService.delete(name));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{name}")
     public ResponseEntity<AbilityResponse> updateAbilityByName(@PathVariable String name, @RequestBody @Valid UpdateAbilityRequest request) {
         return ResponseEntity.ok(abilityService.update(name, request));
