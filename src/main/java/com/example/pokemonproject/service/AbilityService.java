@@ -9,6 +9,7 @@ import com.example.pokemonproject.exception.DuplicateResourceException;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.AbilityRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,7 @@ public class AbilityService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public AbilityResponse save(CreateAbilityRequest request) {
         Ability ability = AbilityMapper.mapToAbility(request);
 
@@ -49,6 +51,7 @@ public class AbilityService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public AbilityResponse update(String abilityName, UpdateAbilityRequest request) {
         Ability ability = findAbilityByName(abilityName);
 
@@ -70,6 +73,7 @@ public class AbilityService {
 
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(String name) {
         abilityRepository.delete(findAbilityByName(name));
         return "Ability deleted successfully!";

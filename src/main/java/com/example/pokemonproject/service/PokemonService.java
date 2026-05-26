@@ -11,6 +11,7 @@ import com.example.pokemonproject.entity.Pokemon;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.PokemonRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +42,7 @@ public class PokemonService {
 
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public PokemonResponse save(CreatePokemonRequest request) {
 
         Pokemon pre_evo = null;
@@ -57,6 +59,7 @@ public class PokemonService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public PokemonResponse manageMoves(String name, AbilityMoveRequest request) {
         Pokemon pokemon = findPokemonByName(name);
 
@@ -74,6 +77,7 @@ public class PokemonService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public PokemonResponse manageAbilities(String name, AbilityMoveRequest request) {
         Pokemon pokemon = findPokemonByName(name);
 
@@ -91,6 +95,7 @@ public class PokemonService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public PokemonResponse update(String pokemonName, UpdatePokemonRequest request) {
 
         Pokemon pokemon = findPokemonByName(pokemonName);
@@ -149,6 +154,7 @@ public class PokemonService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(String name) {
         Pokemon pokemon = findPokemonByName(name);
 

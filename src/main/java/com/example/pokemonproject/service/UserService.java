@@ -10,6 +10,7 @@ import com.example.pokemonproject.exception.DuplicateResourceException;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ public class UserService {
         return userRepository.findByUsername(name).orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getAll() {
         List<User> users = userRepository.findAll();
         return users.stream().map(UserMapper::mapToUserResponse).toList();
@@ -39,6 +41,7 @@ public class UserService {
     }
 
     @Transactional
+    @PreAuthorize("#username == authentication.name")
     public UserResponse manageFavorites(String username, FavoritePokemonRequest request) {
 
         User user = findUserByUsername(username);
@@ -58,6 +61,7 @@ public class UserService {
     }
 
     @Transactional
+    @PreAuthorize("#username == authentication.name or hasRole('ADMIN')")
     public UserResponse update(String username, UpdateUserRequest request) {
 
         User user = findUserByUsername(username);
@@ -81,6 +85,7 @@ public class UserService {
     }
 
     @Transactional
+    @PreAuthorize("#username == authentication.name or hasRole('ADMIN')")
     public String delete(String username) {
         userRepository.delete(findUserByUsername(username));
         return "User deleted successfully!";

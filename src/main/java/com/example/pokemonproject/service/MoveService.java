@@ -9,6 +9,7 @@ import com.example.pokemonproject.exception.DuplicateResourceException;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.MoveRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,7 @@ public class MoveService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public MoveResponse save(CreateMoveRequest request) {
         Move move = MoveMapper.mapToMove(request);
 
@@ -49,6 +51,7 @@ public class MoveService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public MoveResponse update(String moveName, UpdateMoveRequest request) {
         Move move = findMoveByName(moveName);
 
@@ -89,6 +92,7 @@ public class MoveService {
     }
 
     @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(String name) {
         moveRepository.delete(findMoveByName(name));
         return "Move deleted successfully!";
