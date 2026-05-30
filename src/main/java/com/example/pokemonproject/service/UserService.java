@@ -55,8 +55,6 @@ public class UserService {
             }
         }
 
-        userRepository.save(user);
-
         return UserMapper.mapToUserResponse(user);
     }
 
@@ -79,9 +77,7 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(request.password()));
         }
 
-        User saved = userRepository.save(user);
-
-        return UserMapper.mapToUserResponse(saved);
+        return UserMapper.mapToUserResponse(user);
     }
 
     @Transactional

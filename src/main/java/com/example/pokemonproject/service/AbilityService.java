@@ -20,6 +20,7 @@ import java.util.List;
 public class AbilityService {
 
     private final AbilityRepository abilityRepository;
+    private final AbilityMapper abilityMapper;
 
     public Ability findAbilityByName(String name) {
         return abilityRepository.findByNameIgnoreCase(name)
@@ -28,18 +29,18 @@ public class AbilityService {
 
     public List<AbilityResponse> getAll() {
         List<Ability> abilities = abilityRepository.findAll();
-        return abilities.stream().map(AbilityMapper::mapToAbilityResponse).toList();
+        return abilities.stream().map(abilityMapper::mapToAbilityResponse).toList();
     }
 
     public AbilityResponse getByName(String name) {
         Ability ability = findAbilityByName(name);
-        return AbilityMapper.mapToAbilityResponse(ability);
+        return abilityMapper.mapToAbilityResponse(ability);
     }
 
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public AbilityResponse save(CreateAbilityRequest request) {
-        Ability ability = AbilityMapper.mapToAbility(request);
+        Ability ability = abilityMapper.mapToAbility(request);
 
         if (abilityRepository.findByNameIgnoreCase(ability.getName()).isPresent()) {
             throw new DuplicateResourceException("Ability with name " + ability.getName() + " already exists");
@@ -47,7 +48,7 @@ public class AbilityService {
 
         Ability saved = abilityRepository.save(ability);
 
-        return AbilityMapper.mapToAbilityResponse(saved);
+        return abilityMapper.mapToAbilityResponse(saved);
     }
 
     @Transactional
@@ -59,18 +60,12 @@ public class AbilityService {
             if (abilityRepository.findByNameIgnoreCase(request.name()).isPresent()) {
                 throw new DuplicateResourceException("Ability with name " + request.name() + " already exists.");
             }
-            ability.setName(request.name());
         }
 
-        if (request.description() != null) {
-            ability.setDescription(request.description());
-        }
+        abilityMapper.updateAbilityFromRequest(request, ability);
 
-        Ability saved = abilityRepository.save(ability);
-
-        return AbilityMapper.mapToAbilityResponse(saved);
+        return abilityMapper.mapToAbilityResponse(ability);
     }
-
 
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")

@@ -1,19 +1,21 @@
 package com.example.pokemonproject.dto.mapper;
 
 import com.example.pokemonproject.dto.request.ability.CreateAbilityRequest;
+import com.example.pokemonproject.dto.request.ability.UpdateAbilityRequest;
 import com.example.pokemonproject.dto.response.AbilityResponse;
 import com.example.pokemonproject.entity.Ability;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-public class AbilityMapper {
+@Mapper(componentModel = "spring")
+public interface AbilityMapper {
 
-    public static AbilityResponse mapToAbilityResponse(Ability ability) {
-        return new AbilityResponse(ability.getId(), ability.getName(), ability.getDescription());
-    }
+    AbilityResponse mapToAbilityResponse(Ability ability);
 
-    public static Ability mapToAbility(CreateAbilityRequest request) {
-        Ability ability = new Ability();
-        ability.setName(request.name());
-        ability.setDescription(request.description());
-        return ability;
-    }
+    Ability mapToAbility(CreateAbilityRequest request);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateAbilityFromRequest(UpdateAbilityRequest request, @MappingTarget Ability ability);
 }

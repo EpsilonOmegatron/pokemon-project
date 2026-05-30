@@ -15,11 +15,4 @@ public class UserMapper {
                         .toList()
         );
     }
-
-//    public static User mapToUser(CreateUserRequest request) {
-//        User user = new User();
-//        user.setUsername(request.username());
-//        user.setPassword(request.password());
-//        return user;
-//    }
 }

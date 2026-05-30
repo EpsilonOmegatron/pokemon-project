@@ -20,6 +20,7 @@ import java.util.List;
 public class MoveService {
 
     private final MoveRepository moveRepository;
+    private final MoveMapper moveMapper;
 
     public Move findMoveByName(String name) {
         return moveRepository.findByNameIgnoreCase(name)
@@ -28,18 +29,18 @@ public class MoveService {
 
     public List<MoveResponse> getAll() {
         List<Move> moves = moveRepository.findAll();
-        return moves.stream().map(MoveMapper::mapToMoveResponse).toList();
+        return moves.stream().map(moveMapper::mapToMoveResponse).toList();
     }
 
     public MoveResponse getByName(String name) {
         Move move = findMoveByName(name);
-        return MoveMapper.mapToMoveResponse(move);
+        return moveMapper.mapToMoveResponse(move);
     }
 
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public MoveResponse save(CreateMoveRequest request) {
-        Move move = MoveMapper.mapToMove(request);
+        Move move = moveMapper.mapToMove(request);
 
         if (moveRepository.findByNameIgnoreCase(move.getName()).isPresent()) {
             throw new DuplicateResourceException("Move with name " + move.getName() + " already exists");
@@ -47,7 +48,7 @@ public class MoveService {
 
         Move saved = moveRepository.save(move);
 
-        return MoveMapper.mapToMoveResponse(saved);
+        return moveMapper.mapToMoveResponse(saved);
     }
 
     @Transactional
@@ -59,36 +60,11 @@ public class MoveService {
             if (moveRepository.findByNameIgnoreCase(request.name()).isPresent()) {
                 throw new DuplicateResourceException("Move with name " + request.name() + " already exists.");
             }
-            move.setName(request.name());
         }
 
-        if (request.description() != null) {
-            move.setDescription(request.description());
-        }
+        moveMapper.updateMoveFromRequest(request, move);
 
-        if (request.damageCategory() != null) {
-            move.setDamageCategory(request.damageCategory());
-        }
-
-        if (request.type() != null) {
-            move.setType(request.type());
-        }
-
-        if (request.basePower() != null) {
-            move.setBasePower(request.basePower());
-        }
-
-        if (request.powerPoints() != null) {
-            move.setPowerPoints(request.powerPoints());
-        }
-
-        if (request.accuracy() != null) {
-            move.setAccuracy(request.accuracy());
-        }
-
-        Move saved = moveRepository.save(move);
-
-        return MoveMapper.mapToMoveResponse(saved);
+        return moveMapper.mapToMoveResponse(move);
     }
 
     @Transactional
