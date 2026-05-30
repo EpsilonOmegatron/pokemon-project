@@ -1,86 +1,29 @@
 package com.example.pokemonproject.dto.mapper;
 
 import com.example.pokemonproject.dto.request.pokemon.CreatePokemonRequest;
+import com.example.pokemonproject.dto.request.pokemon.UpdatePokemonRequest;
 import com.example.pokemonproject.dto.response.PokemonResponse;
-import com.example.pokemonproject.entity.Ability;
-import com.example.pokemonproject.entity.Move;
 import com.example.pokemonproject.entity.Pokemon;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import java.util.stream.Collectors;
+@Mapper(componentModel = "spring")
+public interface PokemonMapper {
 
-public class PokemonMapper {
+    @Mapping(target = "abilities",
+            expression = "java(pokemon.getAbilities() == null ? java.util.Collections.emptySet() : pokemon.getAbilities().stream().map(a -> a.getName()).collect(java.util.stream.Collectors.toSet()))")
+    @Mapping(target = "moves",
+            expression = "java(pokemon.getMoves() == null ? java.util.Collections.emptySet() : pokemon.getMoves().stream().map(m -> m.getName()).collect(java.util.stream.Collectors.toSet()))")
+    @Mapping(target = "evolvesFrom", source = "evolvesFrom.name")
+    PokemonResponse mapToPokemonResponse(Pokemon pokemon);
 
-    public static PokemonResponse mapToPokemonResponse(Pokemon pokemon) {
-        return new PokemonResponse(
-                pokemon.getId(),
-                pokemon.getName(),
-                pokemon.getTypes(),
+    @Mapping(target = "evolvesFrom", ignore = true)
+    Pokemon mapToPokemon(CreatePokemonRequest request);
 
-                pokemon.getAbilities()
-                        .stream()
-                        .map(Ability::getName)
-                        .collect(Collectors.toSet()),
-
-                pokemon.getMoves()
-                        .stream()
-                        .map(Move::getName)
-                        .collect(Collectors.toSet()),
-
-                pokemon.getHp(),
-                pokemon.getAtk(),
-                pokemon.getSpAtk(),
-                pokemon.getDef(),
-                pokemon.getSpDef(),
-                pokemon.getSpe(),
-
-                pokemon.getEvolvesFrom() == null ? null : pokemon.getEvolvesFrom().getName(),
-
-                pokemon.getEvolutionTrigger()
-        );
-    }
-
-    public static Pokemon mapToPokemon(CreatePokemonRequest request, Pokemon evolvesFrom) {
-
-        Pokemon pokemon = new Pokemon();
-
-        // Name
-        pokemon.setName(request.name());
-
-        // Types
-        pokemon.setTypes(request.types());
-
-        // Stats
-        pokemon.setHp(request.hp());
-        pokemon.setAtk(request.atk());
-        pokemon.setSpAtk(request.spAtk());
-        pokemon.setDef(request.def());
-        pokemon.setSpDef(request.spDef());
-        pokemon.setSpe(request.spe());
-
-        // Evolves from
-        if (evolvesFrom != null) {
-            pokemon.setEvolvesFrom(evolvesFrom);
-        }
-
-        // Evolution Trigger
-        pokemon.setEvolutionTrigger(request.evolutionTrigger());
-
-//        // Moves
-//        Set<Move> moves = request.moves()
-//                .stream()
-//                .map(name -> moveRepository.findByNameIgnoreCase(name)
-//                        .orElseThrow(() -> new ResourceNotFoundException("Move with name " + name + " doesn't exist.")))
-//                .collect(Collectors.toSet());
-//        pokemon.setMoves(moves);
-//
-//        // Abilities
-//        Set<Ability> abilities = request.abilities()
-//                .stream()
-//                .map(name -> abilityRepository.findByNameIgnoreCase(name)
-//                        .orElseThrow(() -> new ResourceNotFoundException("Ability with name " + name + " doesn't exist.")))
-//                .collect(Collectors.toSet());
-//        pokemon.setAbilities(abilities);
-
-        return pokemon;
-    }
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "evolvesFrom", ignore = true)
+    void updateFromRequest(UpdatePokemonRequest request, @MappingTarget Pokemon pokemon);
 }

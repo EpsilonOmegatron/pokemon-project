@@ -24,6 +24,7 @@ public class PokemonService {
     private final PokemonRepository pokemonRepository;
     private final AbilityService abilityService;
     private final MoveService moveService;
+    private final PokemonMapper pokemonMapper;
 
     public Pokemon findPokemonByName(String name) {
         return pokemonRepository.findByNameIgnoreCase(name)
@@ -32,12 +33,12 @@ public class PokemonService {
 
     public List<PokemonResponse> getAll() {
         List<Pokemon> pokemon = pokemonRepository.findAll();
-        return pokemon.stream().map(PokemonMapper::mapToPokemonResponse).toList();
+        return pokemon.stream().map(pokemonMapper::mapToPokemonResponse).toList();
     }
 
     public PokemonResponse getByName(String name) {
         Pokemon pokemon = findPokemonByName(name);
-        return PokemonMapper.mapToPokemonResponse(pokemon);
+        return pokemonMapper.mapToPokemonResponse(pokemon);
     }
 
 
@@ -51,11 +52,12 @@ public class PokemonService {
             pre_evo = pokemonRepository.findByNameIgnoreCase(request.evolvesFrom())
                     .orElseThrow(() -> new ResourceNotFoundException("Pre-evo Pokemon with name " + request.evolvesFrom() + " does not exist."));
         }
-        Pokemon pokemon = PokemonMapper.mapToPokemon(request, pre_evo);
+
+        Pokemon pokemon = pokemonMapper.mapToPokemon(request);
+        pokemon.setEvolvesFrom(pre_evo);
 
         Pokemon saved = pokemonRepository.save(pokemon);
-
-        return PokemonMapper.mapToPokemonResponse(saved);
+        return pokemonMapper.mapToPokemonResponse(saved);
     }
 
     @Transactional
@@ -71,9 +73,7 @@ public class PokemonService {
             }
         }
 
-        Pokemon saved = pokemonRepository.save(pokemon);
-
-        return PokemonMapper.mapToPokemonResponse(saved);
+        return pokemonMapper.mapToPokemonResponse(pokemon);
     }
 
     @Transactional
@@ -89,77 +89,33 @@ public class PokemonService {
             }
         }
 
-        Pokemon saved = pokemonRepository.save(pokemon);
-
-        return PokemonMapper.mapToPokemonResponse(saved);
+        return pokemonMapper.mapToPokemonResponse(pokemon);
     }
 
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public PokemonResponse update(String pokemonName, UpdatePokemonRequest request) {
-
         Pokemon pokemon = findPokemonByName(pokemonName);
 
-        if (request.name() != null && !request.name().isBlank()) {
-            pokemon.setName(request.name());
-        }
-
-        if (request.types() != null && !request.types().isEmpty()) {
-            pokemon.setTypes(request.types());
-        }
-
-        if (request.hp() != null) {
-            pokemon.setHp(request.hp());
-        }
-
-        if (request.atk() != null) {
-            pokemon.setAtk(request.atk());
-        }
-
-        if (request.spAtk() != null) {
-            pokemon.setSpAtk(request.spAtk());
-        }
-
-        if (request.def() != null) {
-            pokemon.setDef(request.def());
-        }
-
-        if (request.spDef() != null) {
-            pokemon.setSpDef(request.spDef());
-        }
-
-        if (request.spe() != null) {
-            pokemon.setSpe(request.spe());
-        }
-
-        if (request.evolutionTrigger() != null) {
-            pokemon.setEvolutionTrigger(request.evolutionTrigger());
-        }
-
         if (request.evolvesFrom() != null) {
-
             if (request.evolvesFrom().isBlank()) {
                 pokemon.setEvolvesFrom(null);
             } else {
-
-                Pokemon preEvolution = findPokemonByName(request.evolvesFrom());
-
-                pokemon.setEvolvesFrom(preEvolution);
+                Pokemon pre_evo = findPokemonByName(request.evolvesFrom());
+                pokemon.setEvolvesFrom(pre_evo);
             }
         }
 
-        Pokemon saved = pokemonRepository.save(pokemon);
+        pokemonMapper.updateFromRequest(request, pokemon);
 
-        return PokemonMapper.mapToPokemonResponse(saved);
+        return pokemonMapper.mapToPokemonResponse(pokemon);
     }
 
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public String delete(String name) {
         Pokemon pokemon = findPokemonByName(name);
-
         pokemonRepository.delete(pokemon);
-
         return "Pokemon deleted successfully";
     }
 }
