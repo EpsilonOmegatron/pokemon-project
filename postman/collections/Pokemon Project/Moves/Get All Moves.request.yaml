@@ -1,6 +1,0 @@
-$kind: http-request
-name: Get All Moves
-method: GET
-url: '{{baseUrl}}/api/moves'
-description: Retrieve all moves
-order: 1000

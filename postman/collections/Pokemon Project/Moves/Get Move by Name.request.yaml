@@ -1,9 +1,0 @@
-$kind: http-request
-name: Get Move by Name
-method: GET
-url: '{{baseUrl}}/api/moves/:name'
-description: Retrieve a move by name
-order: 2000
-pathVariables:
-  - key: name
-    value: thunderbolt

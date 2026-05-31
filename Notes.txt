@@ -1,11 +1,6 @@
 API to return information regarding the video-game series Pokémon, modeled after the PokémonDB website.
 
 To-do:
-- Springboot field validation
-
-- User functionality:
--- implement security (JWT) once basic functionality is implemented, including role designation for endpoints
-
 - Pokémon functionality:
 -- maybe flag some as hidden abilities later
 
