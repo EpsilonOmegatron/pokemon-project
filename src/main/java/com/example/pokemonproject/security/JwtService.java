@@ -1,5 +1,6 @@
 package com.example.pokemonproject.security;
 
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -41,10 +42,14 @@ public class JwtService {
     }
 
     public boolean validateToken(String token) {
-        Jwts.parser()
-                .verifyWith(key())
-                .build()
-                .parseSignedClaims(token);
-        return true;
+        try {
+            Jwts.parser()
+                    .verifyWith(key())
+                    .build()
+                    .parseSignedClaims(token);
+            return true;
+        } catch (JwtException e) {
+            return false;
+        }
     }
 }

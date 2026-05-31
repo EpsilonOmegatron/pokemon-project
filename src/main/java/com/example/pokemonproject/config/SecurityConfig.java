@@ -1,5 +1,7 @@
 package com.example.pokemonproject.config;
 
+import com.example.pokemonproject.exception.CustomAccessDeniedHandler;
+import com.example.pokemonproject.exception.CustomAuthenticationEntryPoint;
 import com.example.pokemonproject.security.CustomUserDetailsService;
 import com.example.pokemonproject.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +27,14 @@ public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                        .accessDeniedHandler(new CustomAccessDeniedHandler())
+                )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/pokemon/**", "/api/abilities/**", "/api/moves/**").permitAll()
