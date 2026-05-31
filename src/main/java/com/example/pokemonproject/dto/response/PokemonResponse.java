@@ -2,6 +2,7 @@ package com.example.pokemonproject.dto.response;
 
 import com.example.pokemonproject.enums.Type;
 
+import java.util.Map;
 import java.util.Set;
 
 public record PokemonResponse(
@@ -17,6 +18,7 @@ public record PokemonResponse(
         Integer spDef,
         Integer spe,
         String evolvesFrom,
-        String evolutionTrigger
+        String evolutionTrigger,
+        Map<Type, Double> damageProfile
 ) {
 }
