@@ -19,6 +19,6 @@ public record PokemonResponse(
         Integer spe,
         String evolvesFrom,
         String evolutionTrigger,
-        Map<Type, Double> damageProfile
+        Map<Type, Double> typeDefenses
 ) {
 }
