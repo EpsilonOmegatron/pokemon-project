@@ -64,7 +64,7 @@ The project uses JWT-based authentication
    - `DB_URL` - MySQL database connection URL
    - `DB_USERNAME` - Database username
    - `DB_PASSWORD` - Database password
-   - `JWT_SECRET` - Secret key for signing JWT tokens
+   - `JWT_SECRET` - Secret key for signing JWT tokens. Must be base64 encoded and at least 256 bits (32 bytes).
    - `JWT_EXPIRY` - JWT token expiration time in milliseconds
 
 3. **Create the database** (if not auto-created by Hibernate):

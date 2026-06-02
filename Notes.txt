@@ -3,8 +3,9 @@ API to return information regarding the video-game series Pokémon, modeled afte
 To-do:
 - Pokémon functionality:
 -- maybe flag some as hidden abilities later
+-- Restructure Entities? (Stats as a seperate entity? Evolution tree?)
+-- More API integration (Moves, Abilities, etc.)
 
 Bonus:
-- Type chart calculator (What a type is effective and ineffective against)
 - Some interesting queries (Get all Pokémon by a specific type, get all Pokémon that can learn X move, etc.)
 - Expand user favorite Pokémon to custom Pokémon with levels, abilities and stuff per user, like an actual box
