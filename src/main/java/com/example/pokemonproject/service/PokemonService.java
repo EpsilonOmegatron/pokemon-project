@@ -8,6 +8,7 @@ import com.example.pokemonproject.dto.response.PokemonResponse;
 import com.example.pokemonproject.entity.Ability;
 import com.example.pokemonproject.entity.Move;
 import com.example.pokemonproject.entity.Pokemon;
+import com.example.pokemonproject.enums.Type;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.PokemonRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,17 @@ public class PokemonService {
         return pokemonMapper.mapToPokemonResponse(pokemon);
     }
 
+    public List<PokemonResponse> getAllByType(String type) {
+        Type parsedType;
+        try {
+            parsedType = Type.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid type " + type);
+        }
+
+        List<Pokemon> pokemon = pokemonRepository.findByTypesContaining(parsedType);
+        return pokemon.stream().map(pokemonMapper::mapToPokemonResponse).toList();
+    }
 
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")

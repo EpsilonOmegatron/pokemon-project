@@ -28,6 +28,16 @@ public class MoveController {
         return ResponseEntity.ok(moveService.getByName(name));
     }
 
+    @GetMapping("/category/{name}")
+    public ResponseEntity<List<MoveResponse>> getAllMovesByCategory(@PathVariable String name) {
+        return ResponseEntity.ok(moveService.getAllByDamageCategory(name));
+    }
+
+    @GetMapping("/type/{name}")
+    public ResponseEntity<List<MoveResponse>> getAllMovesByType(@PathVariable String name) {
+        return ResponseEntity.ok(moveService.getAllByType(name));
+    }
+
     @PostMapping
     public ResponseEntity<MoveResponse> createMove(@RequestBody @Valid CreateMoveRequest request) {
         return ResponseEntity.ok(moveService.save(request));

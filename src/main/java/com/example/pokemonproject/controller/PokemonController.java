@@ -30,6 +30,11 @@ public class PokemonController {
         return ResponseEntity.ok(pokemonService.getByName(name));
     }
 
+    @GetMapping("/type/{type}")
+    public ResponseEntity<List<PokemonResponse>> getAllPokemonByType(@PathVariable String type) {
+        return ResponseEntity.ok(pokemonService.getAllByType(type));
+    }
+
     @PostMapping
     public ResponseEntity<PokemonResponse> registerNewPokemon(@RequestBody @Valid CreatePokemonRequest request) {
         return ResponseEntity.ok(pokemonService.save(request));

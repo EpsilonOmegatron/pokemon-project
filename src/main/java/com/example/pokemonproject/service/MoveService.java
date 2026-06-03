@@ -5,6 +5,8 @@ import com.example.pokemonproject.dto.request.move.CreateMoveRequest;
 import com.example.pokemonproject.dto.request.move.UpdateMoveRequest;
 import com.example.pokemonproject.dto.response.MoveResponse;
 import com.example.pokemonproject.entity.Move;
+import com.example.pokemonproject.enums.DamageCategory;
+import com.example.pokemonproject.enums.Type;
 import com.example.pokemonproject.exception.DuplicateResourceException;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.MoveRepository;
@@ -36,6 +38,30 @@ public class MoveService {
     public MoveResponse getByName(String name) {
         Move move = findMoveByName(name);
         return moveMapper.mapToMoveResponse(move);
+    }
+
+    public List<MoveResponse> getAllByDamageCategory(String category) {
+        DamageCategory parsedCategory;
+        try {
+            parsedCategory = DamageCategory.valueOf(category.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid category: " + category);
+        }
+
+        List<Move> moves = moveRepository.findAllByDamageCategory(parsedCategory);
+        return moves.stream().map(moveMapper::mapToMoveResponse).toList();
+    }
+
+    public List<MoveResponse> getAllByType(String type) {
+        Type parsedType;
+        try {
+            parsedType = Type.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid type " + type);
+        }
+
+        List<Move> pokemon = moveRepository.findByTypeContaining(parsedType);
+        return pokemon.stream().map(moveMapper::mapToMoveResponse).toList();
     }
 
     @Transactional
