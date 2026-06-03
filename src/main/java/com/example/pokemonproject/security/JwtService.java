@@ -1,5 +1,6 @@
 package com.example.pokemonproject.security;
 
+import com.example.pokemonproject.dto.response.AuthResponse;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -23,13 +24,14 @@ public class JwtService {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    public String generateToken(String username) {
-        return Jwts.builder()
+    public AuthResponse generateToken(String username) {
+        String token = Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + jwtExpiryInMillisecond))
                 .signWith(key())
                 .compact();
+        return new AuthResponse(extractUsername(token), token);
     }
 
     public String extractUsername(String token) {

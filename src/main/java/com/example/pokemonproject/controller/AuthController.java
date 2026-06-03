@@ -1,6 +1,7 @@
 package com.example.pokemonproject.controller;
 
 import com.example.pokemonproject.dto.request.user.UserRequest;
+import com.example.pokemonproject.dto.response.AuthResponse;
 import com.example.pokemonproject.dto.response.UserResponse;
 import com.example.pokemonproject.service.AuthService;
 import jakarta.validation.Valid;
@@ -21,7 +22,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid UserRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid UserRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 }

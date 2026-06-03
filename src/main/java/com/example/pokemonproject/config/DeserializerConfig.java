@@ -7,7 +7,7 @@ import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.ValueDeserializer;
 
 @JacksonComponent
-public class EmptyStringAsNullDeserializer extends ValueDeserializer<String> {
+public class DeserializerConfig extends ValueDeserializer<String> {
 
     @Override
     public String deserialize(JsonParser parser, DeserializationContext context) throws JacksonException {

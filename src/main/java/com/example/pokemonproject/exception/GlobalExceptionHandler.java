@@ -4,8 +4,6 @@ import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,6 +34,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+        ErrorResponse error = new ErrorResponse("ILLEGAL_ARGUMENT", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException e) {
 
@@ -56,21 +60,21 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
-        ErrorResponse error = new ErrorResponse("ACCESS_DENIED", e.getMessage());
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
-    }
-
-    @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
-        ErrorResponse error = new ErrorResponse("AUTHENTICATION_FAILED", e.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
-    }
-
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
         ErrorResponse error = new ErrorResponse("SQL_INTEGRITY_CONSTRAINT_VIOLATION", e.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
+
+//    @ExceptionHandler(AccessDeniedException.class)
+//    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
+//        ErrorResponse error = new ErrorResponse("ACCESS_DENIED", e.getMessage());
+//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+//    }
+//
+//    @ExceptionHandler(AuthenticationException.class)
+//    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
+//        ErrorResponse error = new ErrorResponse("AUTHENTICATION_FAILED", e.getMessage());
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+//    }
 }

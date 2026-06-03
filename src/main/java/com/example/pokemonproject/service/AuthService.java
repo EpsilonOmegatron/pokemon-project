@@ -2,6 +2,7 @@ package com.example.pokemonproject.service;
 
 import com.example.pokemonproject.dto.mapper.UserMapper;
 import com.example.pokemonproject.dto.request.user.UserRequest;
+import com.example.pokemonproject.dto.response.AuthResponse;
 import com.example.pokemonproject.dto.response.UserResponse;
 import com.example.pokemonproject.entity.User;
 import com.example.pokemonproject.exception.DuplicateResourceException;
@@ -27,7 +28,7 @@ public class AuthService {
     private final JwtService jwtService;
 
     @Transactional
-    public String login(UserRequest request) {
+    public AuthResponse login(UserRequest request) {
         authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
