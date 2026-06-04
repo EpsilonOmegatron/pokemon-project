@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface AbilityRepository extends JpaRepository<Ability, Integer> {
 
-    Optional<Ability> findByNameIgnoreCase(String name);
+    Optional<Ability> findBySlug(String slug);
 }

@@ -1,6 +1,7 @@
 package com.example.pokemonproject.entity;
 
 import com.example.pokemonproject.enums.Type;
+import com.example.pokemonproject.util.SlugUtils;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(indexes = @Index(name = "idx_pokemon_slug", columnList = "slug"))
 public class Pokemon {
 
     @Id
@@ -21,6 +23,9 @@ public class Pokemon {
 
     @Column(nullable = false, unique = true, length = 50)
     private String name;
+
+    @Column(nullable = false, unique = true)
+    private String slug;
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
@@ -66,5 +71,11 @@ public class Pokemon {
 
     @Column(length = 50)
     private String evolutionTrigger;
+
+    @PrePersist
+    @PreUpdate
+    private void ensureSlug() {
+        this.slug = SlugUtils.toSlug(this.name);
+    }
 }
 

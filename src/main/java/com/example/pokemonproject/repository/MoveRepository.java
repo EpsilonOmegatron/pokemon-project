@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface MoveRepository extends JpaRepository<Move, Integer> {
 
-    Optional<Move> findByNameIgnoreCase(String name);
+    Optional<Move> findBySlug(String slug);
 
     List<Move> findByDamageCategory(DamageCategory damageCategory);
 

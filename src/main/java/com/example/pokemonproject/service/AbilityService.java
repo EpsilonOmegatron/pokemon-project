@@ -8,6 +8,7 @@ import com.example.pokemonproject.entity.Ability;
 import com.example.pokemonproject.exception.DuplicateResourceException;
 import com.example.pokemonproject.exception.ResourceNotFoundException;
 import com.example.pokemonproject.repository.AbilityRepository;
+import com.example.pokemonproject.util.SlugUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,8 @@ public class AbilityService {
     private final AbilityMapper abilityMapper;
 
     public Ability findAbilityByName(String name) {
-        return abilityRepository.findByNameIgnoreCase(name)
+        String sanitizedName = SlugUtils.toSlug(name);
+        return abilityRepository.findBySlug(sanitizedName)
                 .orElseThrow(() -> new ResourceNotFoundException("Ability with name " + name + " doesn't exist."));
     }
 
@@ -43,7 +45,7 @@ public class AbilityService {
     public AbilityResponse save(CreateAbilityRequest request) {
         Ability ability = abilityMapper.mapToAbility(request);
 
-        if (abilityRepository.findByNameIgnoreCase(ability.getName()).isPresent()) {
+        if (abilityRepository.findBySlug(ability.getName()).isPresent()) {
             throw new DuplicateResourceException("Ability with name " + ability.getName() + " already exists");
         }
 
@@ -58,7 +60,7 @@ public class AbilityService {
         Ability ability = findAbilityByName(abilityName);
 
         if (request.name() != null && !request.name().equals(ability.getName())) {
-            if (abilityRepository.findByNameIgnoreCase(request.name()).isPresent()) {
+            if (abilityRepository.findBySlug(request.name()).isPresent()) {
                 throw new DuplicateResourceException("Ability with name " + request.name() + " already exists.");
             }
         }
