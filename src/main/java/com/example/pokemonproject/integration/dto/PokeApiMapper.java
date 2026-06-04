@@ -4,13 +4,12 @@ import com.example.pokemonproject.entity.Pokemon;
 import com.example.pokemonproject.enums.Type;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
 public class PokeApiMapper {
 
-    public Pokemon mapPokeApiResponse(PokeApiResponse fetchedPokemon) {
+    public Pokemon mapPokeApiResponse(ApiPokemonResponse fetchedPokemon) {
 
         Pokemon pokemon = new Pokemon();
 
@@ -23,16 +22,16 @@ public class PokeApiMapper {
                 .map(Type::valueOf)
                 .collect(Collectors.toSet()));
 
-        Map<String, Integer> fetchedStats = fetchedPokemon.stats()
-                .stream()
-                .collect(Collectors.toMap(statSlot -> statSlot.stat().name(), PokeApiResponse.StatSlot::baseStat));
-
-        pokemon.setHp(fetchedStats.getOrDefault("hp", 0));
-        pokemon.setAtk(fetchedStats.getOrDefault("attack", 0));
-        pokemon.setDef(fetchedStats.getOrDefault("defense", 0));
-        pokemon.setSpAtk(fetchedStats.getOrDefault("special-attack", 0));
-        pokemon.setSpDef(fetchedStats.getOrDefault("special-defense", 0));
-        pokemon.setSpe(fetchedStats.getOrDefault("speed", 0));
+        fetchedPokemon.stats().forEach(stat -> {
+            switch (stat.stat().name()) {
+                case "hp" -> pokemon.setHp(stat.baseStat());
+                case "attack" -> pokemon.setAtk(stat.baseStat());
+                case "defense" -> pokemon.setDef(stat.baseStat());
+                case "special-attack" -> pokemon.setSpAtk(stat.baseStat());
+                case "special-defense" -> pokemon.setSpDef(stat.baseStat());
+                case "speed" -> pokemon.setSpe(stat.baseStat());
+            }
+        });
 
         return pokemon;
     }

@@ -29,7 +29,7 @@ public class PokemonService {
     private final PokemonMapper pokemonMapper;
 
     public Pokemon findPokemonByName(String name) {
-        return pokemonRepository.findByNameIgnoreCase(name)
+        return pokemonRepository.findBySlug(name)
                 .orElseThrow(() -> new ResourceNotFoundException("Pokemon with name " + name + " doesn't exist."));
     }
 
@@ -62,7 +62,7 @@ public class PokemonService {
         Pokemon pre_evo = null;
 
         if (request.evolvesFrom() != null && !request.evolvesFrom().isBlank()) {
-            pre_evo = pokemonRepository.findByNameIgnoreCase(request.evolvesFrom())
+            pre_evo = pokemonRepository.findBySlug(request.evolvesFrom())
                     .orElseThrow(() -> new ResourceNotFoundException("Pre-evo Pokemon with name " + request.evolvesFrom() + " does not exist."));
         }
 

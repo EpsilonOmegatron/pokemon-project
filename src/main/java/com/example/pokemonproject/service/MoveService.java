@@ -26,7 +26,7 @@ public class MoveService {
     private final MoveMapper moveMapper;
 
     public Move findMoveByName(String name) {
-        return moveRepository.findByNameIgnoreCase(name)
+        return moveRepository.findBySlug(name)
                 .orElseThrow(() -> new ResourceNotFoundException("Move with name " + name + " doesn't exist."));
     }
 
@@ -69,7 +69,7 @@ public class MoveService {
     public MoveResponse save(CreateMoveRequest request) {
         Move move = moveMapper.mapToMove(request);
 
-        if (moveRepository.findByNameIgnoreCase(move.getName()).isPresent()) {
+        if (moveRepository.findBySlug(move.getName()).isPresent()) {
             throw new DuplicateResourceException("Move with name " + move.getName() + " already exists");
         }
 
@@ -84,7 +84,7 @@ public class MoveService {
         Move move = findMoveByName(moveName);
 
         if (request.name() != null && !request.name().equalsIgnoreCase(move.getName())) {
-            if (moveRepository.findByNameIgnoreCase(request.name()).isPresent()) {
+            if (moveRepository.findBySlug(request.name()).isPresent()) {
                 throw new DuplicateResourceException("Move with name " + request.name() + " already exists.");
             }
         }

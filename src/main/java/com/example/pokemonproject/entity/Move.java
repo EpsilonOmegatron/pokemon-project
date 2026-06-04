@@ -2,6 +2,7 @@ package com.example.pokemonproject.entity;
 
 import com.example.pokemonproject.enums.DamageCategory;
 import com.example.pokemonproject.enums.Type;
+import com.example.pokemonproject.util.SlugUtils;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(name = "moves", indexes = @Index(name = "idx_move_slug", columnList = "slug"))
 public class Move {
 
     @Id
@@ -19,6 +21,9 @@ public class Move {
 
     @Column(length = 50, nullable = false, unique = true)
     private String name;
+
+    @Column(nullable = false, unique = true)
+    private String slug;
 
     @Column(length = 100, nullable = false)
     private String description;
@@ -39,4 +44,10 @@ public class Move {
 
     @Column(nullable = false)
     private Integer accuracy;
+
+    @PrePersist
+    @PreUpdate
+    private void ensureSlug() {
+        this.slug = SlugUtils.toSlug(this.name);
+    }
 }

@@ -1,7 +1,7 @@
 package com.example.pokemonproject.integration.controller;
 
 import com.example.pokemonproject.dto.response.PokemonResponse;
-import com.example.pokemonproject.integration.dto.PokeApiResponse;
+import com.example.pokemonproject.integration.dto.ApiPokemonResponse;
 import com.example.pokemonproject.integration.service.PokeApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ public class PokeApiController {
     private final PokeApiService pokeApiService;
 
     @GetMapping("/pokemon/{name}")
-    public ResponseEntity<PokeApiResponse> fetchExternalPokemon(@PathVariable String name) {
+    public ResponseEntity<ApiPokemonResponse> fetchExternalPokemon(@PathVariable String name) {
         return ResponseEntity.ok(pokeApiService.getExternalPokemon(name));
     }
 
