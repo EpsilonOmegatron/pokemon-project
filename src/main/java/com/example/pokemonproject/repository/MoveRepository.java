@@ -12,7 +12,7 @@ public interface MoveRepository extends JpaRepository<Move, Integer> {
 
     Optional<Move> findByNameIgnoreCase(String name);
 
-    List<Move> findAllByDamageCategory(DamageCategory damageCategory);
+    List<Move> findByDamageCategory(DamageCategory damageCategory);
 
-    List<Move> findByTypeContaining(Type type);
+    List<Move> findByType(Type type);
 }

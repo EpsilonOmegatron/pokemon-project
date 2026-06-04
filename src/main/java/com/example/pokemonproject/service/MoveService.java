@@ -48,7 +48,7 @@ public class MoveService {
             throw new IllegalArgumentException("Invalid category: " + category);
         }
 
-        List<Move> moves = moveRepository.findAllByDamageCategory(parsedCategory);
+        List<Move> moves = moveRepository.findByDamageCategory(parsedCategory);
         return moves.stream().map(moveMapper::mapToMoveResponse).toList();
     }
 
@@ -60,7 +60,7 @@ public class MoveService {
             throw new IllegalArgumentException("Invalid type " + type);
         }
 
-        List<Move> pokemon = moveRepository.findByTypeContaining(parsedType);
+        List<Move> pokemon = moveRepository.findByType(parsedType);
         return pokemon.stream().map(moveMapper::mapToMoveResponse).toList();
     }
 
