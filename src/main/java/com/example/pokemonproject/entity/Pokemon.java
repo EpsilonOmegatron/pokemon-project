@@ -48,22 +48,22 @@ public class Pokemon {
     private Set<Move> moves = new HashSet<>();
 
     @Column(nullable = false)
-    private Integer hp;
+    private Integer hp = 1;
 
     @Column(nullable = false)
-    private Integer atk;
+    private Integer atk = 1;
 
     @Column(nullable = false)
-    private Integer spAtk;
+    private Integer spAtk = 1;
 
     @Column(nullable = false)
-    private Integer def;
+    private Integer def = 1;
 
     @Column(nullable = false)
-    private Integer spDef;
+    private Integer spDef = 1;
 
     @Column(nullable = false)
-    private Integer spe;
+    private Integer spe = 1;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evolves_from")
