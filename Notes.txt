@@ -9,3 +9,10 @@ Bonus:
 - Maybe flag some abilities as hidden later
 - Some interesting queries (Get all Pokémon by a specific type, get all Pokémon that can learn X move, etc.)
 - Expand user favorite Pokémon to custom Pokémon with levels, abilities and stuff per user, like an actual box
+
+Extras:
+- Package naming
+- Locales for messages
+- Envelopes for responses
+- Further generalize
+- Previous structure better for versioning practicality
