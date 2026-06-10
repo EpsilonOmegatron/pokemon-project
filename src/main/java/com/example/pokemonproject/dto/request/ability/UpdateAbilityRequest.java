@@ -4,10 +4,10 @@ import jakarta.validation.constraints.Size;
 
 public record UpdateAbilityRequest(
 
-        @Size(max = 50, message = "Ability name must be <= 50 characters")
+        @Size(min = 5, max = 50, message = "{validation.range}")
         String name,
 
-        @Size(max = 100, message = "Ability description must be <= 100 characters")
+        @Size(min = 10, max = 100, message = "{validation.range}")
         String description
 ) {
 }

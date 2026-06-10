@@ -1,7 +1,7 @@
 package com.example.pokemonproject.entity;
 
-import com.example.pokemonproject.enums.Type;
-import com.example.pokemonproject.util.SlugUtils;
+import com.example.pokemonproject.common.enums.Type;
+import com.example.pokemonproject.common.utils.SlugUtils;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

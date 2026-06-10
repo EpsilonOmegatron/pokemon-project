@@ -1,35 +1,36 @@
 package com.example.pokemonproject.dto.request.move;
 
-import com.example.pokemonproject.enums.DamageCategory;
-import com.example.pokemonproject.enums.Type;
+import com.example.pokemonproject.common.enums.DamageCategory;
+import com.example.pokemonproject.common.enums.Type;
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Range;
 
 public record CreateMoveRequest(
 
-        @NotBlank(message = "Move name is required")
-        @Size(max = 50, message = "Move name must be <= 50 characters")
+        @NotBlank(message = "{validation.required}")
+        @Size(min = 5, max = 50, message = "{validation.range}")
         String name,
 
-        @NotBlank(message = "Move description is required")
-        @Size(max = 100, message = "Move description must be <= 100 characters")
+        @NotBlank(message = "{validation.required}")
+        @Size(min = 5, max = 100, message = "{validation.range}")
         String description,
 
-        @NotNull(message = "Damage category is required")
+        @NotNull(message = "{validation.required}")
         DamageCategory damageCategory,
 
-        @NotNull(message = "Type name is required")
+        @NotNull(message = "{validation.required}")
         Type type,
 
-        @NotNull(message = "Base power is required")
-        @Min(0) @Max(250)
+        @NotNull(message = "{validation.required}")
+        @Range(min = 0, max = 250, message = "{validation.range}")
         Integer basePower,
 
-        @NotNull(message = "Power points are required")
-        @Min(1) @Max(32)
+        @NotNull(message = "{validation.required}")
+        @Range(min = 1, max = 64, message = "{validation.range}")
         Integer powerPoints,
 
-        @NotNull(message = "Accuracy is required")
-        @Min(1) @Max(100)
+        @NotNull(message = "{validation.required}")
+        @Range(min = 1, max = 100, message = "{validation.range}")
         Integer accuracy
 ) {
 }

@@ -1,6 +1,6 @@
-package com.example.pokemonproject.util;
+package com.example.pokemonproject.common.utils;
 
-import com.example.pokemonproject.enums.Nature;
+import com.example.pokemonproject.common.enums.Nature;
 
 public class NatureChart {
 

@@ -14,5 +14,3 @@ Extras:
 - Package naming
 - Locales for messages
 - Envelopes for responses
-- Further generalize
-- Previous structure better for versioning practicality

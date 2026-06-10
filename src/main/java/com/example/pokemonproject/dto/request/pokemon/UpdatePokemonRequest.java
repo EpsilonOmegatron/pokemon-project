@@ -1,41 +1,40 @@
 package com.example.pokemonproject.dto.request.pokemon;
 
-import com.example.pokemonproject.enums.Type;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import com.example.pokemonproject.common.enums.Type;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Range;
 
 import java.util.Set;
 
 public record UpdatePokemonRequest(
 
-        @Size(max = 50, message = "Name must be <= 50 characters")
+        @Size(min = 1, max = 50, message = "{validation.range}")
         String name,
 
         Set<Type> types,
 
-        @Min(1) @Max(255)
+        @Range(min = 1, max = 255, message = "{validation.range}")
         Integer hp,
 
-        @Min(1) @Max(255)
+        @Range(min = 1, max = 255, message = "{validation.range}")
         Integer atk,
 
-        @Min(1) @Max(255)
+        @Range(min = 1, max = 255, message = "{validation.range}")
         Integer spAtk,
 
-        @Min(1) @Max(255)
+        @Range(min = 1, max = 255, message = "{validation.range}")
         Integer def,
 
-        @Min(1) @Max(255)
+        @Range(min = 1, max = 255, message = "{validation.range}")
         Integer spDef,
 
-        @Min(1) @Max(255)
+        @Range(min = 1, max = 255, message = "{validation.range}")
         Integer spe,
 
-        @Size(max = 50, message = "Pre-evolution must be <= 50 characters")
+        @Size(min = 1, max = 50, message = "{validation.range}")
         String evolvesFrom,
 
-        @Size(max = 50, message = "Evolution trigger must be <= 50 characters")
+        @Size(min = 1, max = 50, message = "{validation.range}")
         String evolutionTrigger
 ) {
 }

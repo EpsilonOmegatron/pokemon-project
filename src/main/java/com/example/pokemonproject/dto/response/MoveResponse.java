@@ -1,7 +1,7 @@
 package com.example.pokemonproject.dto.response;
 
-import com.example.pokemonproject.enums.DamageCategory;
-import com.example.pokemonproject.enums.Type;
+import com.example.pokemonproject.common.enums.DamageCategory;
+import com.example.pokemonproject.common.enums.Type;
 
 public record MoveResponse(
         Integer id,

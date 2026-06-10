@@ -5,11 +5,11 @@ import jakarta.validation.constraints.Size;
 
 public record UpdateUserRequest(
 
-        @Size(max = 50, message = "Username must be <= 50 characters")
+        @Size(min = 5, max = 50, message = "{validation.range}")
         @ValidUsername
         String username,
 
-        @Size(max = 255, message = "Password must be <= 255 characters")
+        @Size(min = 10, max = 255, message = "{validation.range}")
         String password
 ) {
 }

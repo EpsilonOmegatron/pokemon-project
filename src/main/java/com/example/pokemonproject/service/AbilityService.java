@@ -5,10 +5,9 @@ import com.example.pokemonproject.dto.request.ability.CreateAbilityRequest;
 import com.example.pokemonproject.dto.request.ability.UpdateAbilityRequest;
 import com.example.pokemonproject.dto.response.AbilityResponse;
 import com.example.pokemonproject.entity.Ability;
-import com.example.pokemonproject.exception.DuplicateResourceException;
-import com.example.pokemonproject.exception.ResourceNotFoundException;
+import com.example.pokemonproject.exception.ApiException;
 import com.example.pokemonproject.repository.AbilityRepository;
-import com.example.pokemonproject.util.SlugUtils;
+import com.example.pokemonproject.common.utils.SlugUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class AbilityService {
     public Ability findAbilityByName(String name) {
         String sanitizedName = SlugUtils.toSlug(name);
         return abilityRepository.findBySlug(sanitizedName)
-                .orElseThrow(() -> new ResourceNotFoundException("Ability with name " + name + " doesn't exist."));
+                .orElseThrow(() -> new ApiException("Ability with name " + name + " doesn't exist."));
     }
 
     public List<AbilityResponse> getAll() {
@@ -46,7 +45,7 @@ public class AbilityService {
         Ability ability = abilityMapper.mapToAbility(request);
 
         if (abilityRepository.findBySlug(ability.getName()).isPresent()) {
-            throw new DuplicateResourceException("Ability with name " + ability.getName() + " already exists");
+            throw new ApiException("Ability with name " + ability.getName() + " already exists");
         }
 
         Ability saved = abilityRepository.save(ability);
@@ -61,7 +60,7 @@ public class AbilityService {
 
         if (request.name() != null && !request.name().equals(ability.getName())) {
             if (abilityRepository.findBySlug(request.name()).isPresent()) {
-                throw new DuplicateResourceException("Ability with name " + request.name() + " already exists.");
+                throw new ApiException("Ability with name " + request.name() + " already exists.");
             }
         }
 

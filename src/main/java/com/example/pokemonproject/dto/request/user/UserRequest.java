@@ -6,12 +6,12 @@ import jakarta.validation.constraints.Size;
 
 public record UserRequest(
 
-        @NotBlank(message = "Username is required")
+        @NotBlank(message = "{validation.required}")
         @ValidUsername
         String username,
 
-        @NotBlank(message = "Password is required")
-        @Size(max = 255, message = "Password must be <= 255 characters")
+        @NotBlank(message = "{validation.required}")
+        @Size(min = 10, max = 255, message = "{validation.range}")
         String password
 ) {
 }

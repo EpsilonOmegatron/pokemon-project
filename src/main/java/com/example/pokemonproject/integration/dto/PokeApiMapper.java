@@ -1,7 +1,7 @@
 package com.example.pokemonproject.integration.dto;
 
 import com.example.pokemonproject.entity.Pokemon;
-import com.example.pokemonproject.enums.Type;
+import com.example.pokemonproject.common.enums.Type;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;

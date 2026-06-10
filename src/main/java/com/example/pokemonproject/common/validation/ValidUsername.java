@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = UsernameValidator.class)
 @Documented
 public @interface ValidUsername {
-    String message() default "Username is invalid. It must contain only letters, numbers, underscores and hyphens, and be 5-50 characters long";
+    String message() default "{validation.username.invalid}";
 
     Class<?>[] groups() default {};
 

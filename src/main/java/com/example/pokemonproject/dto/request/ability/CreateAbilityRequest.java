@@ -5,12 +5,12 @@ import jakarta.validation.constraints.Size;
 
 public record CreateAbilityRequest(
 
-        @NotBlank(message = "Ability name is required")
-        @Size(max = 50, message = "Ability name must be <= 50 characters")
+        @NotBlank(message = "{validation.required}")
+        @Size(min = 5, max = 50, message = "{validation.range}")
         String name,
 
-        @NotBlank(message = "Ability description is required")
-        @Size(max = 100, message = "Ability description must be <= 100 characters")
+        @NotBlank(message = "{validation.required}")
+        @Size(min = 10, max = 100, message = "{validation.range}")
         String description
 ) {
 }

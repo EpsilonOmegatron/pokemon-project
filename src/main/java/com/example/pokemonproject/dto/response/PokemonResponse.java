@@ -1,6 +1,6 @@
 package com.example.pokemonproject.dto.response;
 
-import com.example.pokemonproject.enums.Type;
+import com.example.pokemonproject.common.enums.Type;
 
 import java.util.Map;
 import java.util.Set;

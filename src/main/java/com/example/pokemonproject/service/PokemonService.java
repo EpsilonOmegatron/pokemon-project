@@ -8,8 +8,8 @@ import com.example.pokemonproject.dto.response.PokemonResponse;
 import com.example.pokemonproject.entity.Ability;
 import com.example.pokemonproject.entity.Move;
 import com.example.pokemonproject.entity.Pokemon;
-import com.example.pokemonproject.enums.Type;
-import com.example.pokemonproject.exception.ResourceNotFoundException;
+import com.example.pokemonproject.common.enums.Type;
+import com.example.pokemonproject.exception.ApiException;
 import com.example.pokemonproject.repository.PokemonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +30,7 @@ public class PokemonService {
 
     public Pokemon findPokemonByName(String name) {
         return pokemonRepository.findBySlug(name)
-                .orElseThrow(() -> new ResourceNotFoundException("Pokemon with name " + name + " doesn't exist."));
+                .orElseThrow(() -> new ApiException("Pokemon with name " + name + " doesn't exist."));
     }
 
     public List<PokemonResponse> getAll() {
@@ -63,7 +63,7 @@ public class PokemonService {
 
         if (request.evolvesFrom() != null && !request.evolvesFrom().isBlank()) {
             pre_evo = pokemonRepository.findBySlug(request.evolvesFrom())
-                    .orElseThrow(() -> new ResourceNotFoundException("Pre-evo Pokemon with name " + request.evolvesFrom() + " does not exist."));
+                    .orElseThrow(() -> new ApiException("Pre-evo Pokemon with name " + request.evolvesFrom() + " does not exist."));
         }
 
         Pokemon pokemon = pokemonMapper.mapToPokemon(request);

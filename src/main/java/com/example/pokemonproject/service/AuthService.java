@@ -5,8 +5,7 @@ import com.example.pokemonproject.dto.request.user.UserRequest;
 import com.example.pokemonproject.dto.response.AuthResponse;
 import com.example.pokemonproject.dto.response.UserResponse;
 import com.example.pokemonproject.entity.User;
-import com.example.pokemonproject.exception.DuplicateResourceException;
-import com.example.pokemonproject.exception.ResourceNotFoundException;
+import com.example.pokemonproject.exception.ApiException;
 import com.example.pokemonproject.repository.RoleRepository;
 import com.example.pokemonproject.repository.UserRepository;
 import com.example.pokemonproject.security.JwtService;
@@ -40,13 +39,13 @@ public class AuthService {
         User user = new User();
 
         if (userRepository.findByUsername(request.username()).isPresent()) {
-            throw new DuplicateResourceException("Username already exists");
+            throw new ApiException("Username already exists");
         }
 
         user.setUsername(request.username());
         user.setPassword(passwordEncoder.encode(request.password()));
         user.getRoles().add(roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new ResourceNotFoundException("Role not found")));
+                .orElseThrow(() -> new ApiException("Role not found")));
 
         User saved = userRepository.save(user);
 

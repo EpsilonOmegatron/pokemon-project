@@ -6,8 +6,7 @@ import com.example.pokemonproject.dto.request.user.UpdateUserRequest;
 import com.example.pokemonproject.dto.response.UserResponse;
 import com.example.pokemonproject.entity.Pokemon;
 import com.example.pokemonproject.entity.User;
-import com.example.pokemonproject.exception.DuplicateResourceException;
-import com.example.pokemonproject.exception.ResourceNotFoundException;
+import com.example.pokemonproject.exception.ApiException;
 import com.example.pokemonproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +26,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public User findUserByUsername(String name) {
-        return userRepository.findByUsername(name).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return userRepository.findByUsername(name).orElseThrow(() -> new ApiException("User not found"));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -68,7 +67,7 @@ public class UserService {
         if (request.username() != null && !request.username().equalsIgnoreCase(user.getUsername())) {
 
             if (userRepository.findByUsername(request.username()).isPresent()) {
-                throw new DuplicateResourceException("User with username " + request.username() + " already exists.");
+                throw new ApiException("User with username " + request.username() + " already exists.");
             }
 
             user.setUsername(request.username());

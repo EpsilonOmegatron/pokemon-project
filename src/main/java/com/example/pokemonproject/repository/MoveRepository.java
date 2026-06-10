@@ -1,8 +1,8 @@
 package com.example.pokemonproject.repository;
 
 import com.example.pokemonproject.entity.Move;
-import com.example.pokemonproject.enums.DamageCategory;
-import com.example.pokemonproject.enums.Type;
+import com.example.pokemonproject.common.enums.DamageCategory;
+import com.example.pokemonproject.common.enums.Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

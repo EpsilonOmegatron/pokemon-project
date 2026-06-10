@@ -1,6 +1,6 @@
 package com.example.pokemonproject.dto.request.user;
 
-import com.example.pokemonproject.enums.UpdateAction;
+import com.example.pokemonproject.common.enums.UpdateAction;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -8,10 +8,10 @@ import java.util.List;
 
 public record FavoritePokemonRequest(
 
-        @NotEmpty(message = "Pokemon are required")
+        @NotEmpty(message = "{validation.required}")
         List<String> pokemon,
 
-        @NotNull(message = "Specify update action")
+        @NotNull(message = "{validation.action.required}")
         UpdateAction action
 ) {
 }

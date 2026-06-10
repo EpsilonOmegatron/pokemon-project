@@ -1,4 +1,4 @@
-package com.example.pokemonproject.util;
+package com.example.pokemonproject.common.utils;
 
 import java.text.Normalizer;
 import java.util.Locale;

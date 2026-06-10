@@ -1,29 +1,28 @@
 package com.example.pokemonproject.dto.request.move;
 
-import com.example.pokemonproject.enums.DamageCategory;
-import com.example.pokemonproject.enums.Type;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import com.example.pokemonproject.common.enums.DamageCategory;
+import com.example.pokemonproject.common.enums.Type;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Range;
 
 public record UpdateMoveRequest(
 
-        @Size(max = 50, message = "Move name must be <= 50 characters")
+        @Size(min = 5, max = 50, message = "{validation.range}")
         String name,
 
-        @Size(max = 50, message = "Move description must be <= 50 characters")
+        @Size(min = 10, max = 100, message = "{validation.range}")
         String description,
 
         DamageCategory damageCategory,
         Type type,
 
-        @Min(1) @Max(250)
+        @Range(min = 0, max = 250, message = "{validation.range}")
         Integer basePower,
 
-        @Min(1) @Max(32)
+        @Range(min = 1, max = 64, message = "{validation.range}")
         Integer powerPoints,
 
-        @Min(1) @Max(100)
+        @Range(min = 1, max = 100, message = "{validation.range}")
         Integer accuracy
 ) {
 }

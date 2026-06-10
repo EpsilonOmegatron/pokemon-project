@@ -3,12 +3,12 @@ package com.example.pokemonproject.integration.service;
 import com.example.pokemonproject.dto.mapper.PokemonMapper;
 import com.example.pokemonproject.dto.response.PokemonResponse;
 import com.example.pokemonproject.entity.Pokemon;
-import com.example.pokemonproject.exception.ResourceNotFoundException;
+import com.example.pokemonproject.exception.ApiException;
 import com.example.pokemonproject.integration.dto.ApiSpeciesResponse;
 import com.example.pokemonproject.integration.dto.PokeApiMapper;
 import com.example.pokemonproject.integration.dto.ApiPokemonResponse;
 import com.example.pokemonproject.repository.PokemonRepository;
-import com.example.pokemonproject.util.SlugUtils;
+import com.example.pokemonproject.common.utils.SlugUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,7 +42,7 @@ public class PokeApiService {
                 .uri("/pokemon-species/{name}", name.toLowerCase())
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
-                    throw new ResourceNotFoundException("PokeAPI couldn't find: " + name);
+                    throw new ApiException("PokeAPI couldn't find: " + name);
                 })
                 .body(ApiSpeciesResponse.class);
 
@@ -50,7 +50,7 @@ public class PokeApiService {
                 .filter(n -> "en".equals(n.language().name()))
                 .map(ApiSpeciesResponse.NameSlot::name)
                 .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Couldn't find English name for: " + name));
+                .orElseThrow(() -> new ApiException("Couldn't find English name for: " + name));
     }
 
     public ApiPokemonResponse getExternalPokemon(String name) {
@@ -58,7 +58,7 @@ public class PokeApiService {
                 .uri("/pokemon/{name}", name.toLowerCase())
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
-                    throw new ResourceNotFoundException("PokeAPI couldn't find: " + name);
+                    throw new ApiException("PokeAPI couldn't find: " + name);
                 })
                 .body(ApiPokemonResponse.class);
     }

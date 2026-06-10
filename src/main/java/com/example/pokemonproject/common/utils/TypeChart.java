@@ -1,6 +1,6 @@
-package com.example.pokemonproject.util;
+package com.example.pokemonproject.common.utils;
 
-import com.example.pokemonproject.enums.Type;
+import com.example.pokemonproject.common.enums.Type;
 
 import java.util.Collection;
 import java.util.EnumMap;

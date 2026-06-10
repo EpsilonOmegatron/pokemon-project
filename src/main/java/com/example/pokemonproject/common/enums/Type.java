@@ -1,4 +1,4 @@
-package com.example.pokemonproject.enums;
+package com.example.pokemonproject.common.enums;
 
 public enum Type {
     NORMAL,

@@ -4,7 +4,7 @@ import com.example.pokemonproject.dto.request.pokemon.CreatePokemonRequest;
 import com.example.pokemonproject.dto.request.pokemon.UpdatePokemonRequest;
 import com.example.pokemonproject.dto.response.PokemonResponse;
 import com.example.pokemonproject.entity.Pokemon;
-import com.example.pokemonproject.util.TypeChart;
+import com.example.pokemonproject.common.utils.TypeChart;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
